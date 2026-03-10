@@ -7,7 +7,7 @@ import { ChevronRight } from "lucide-react";
 import { useTranslation } from "@/i18n/context";
 
 const BLUR_FADE_DELAY = 0.04;
-const DEFAULT_VISIBLE = 6;
+const DEFAULT_VISIBLE = 4;
 
 export default function ProjectsSection() {
     const { t } = useTranslation();

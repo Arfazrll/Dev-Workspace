@@ -94,7 +94,7 @@ const projectItems = p.projects.map((proj: Project) => {
   const dateStr = proj.customTimeline || startDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
   return {
     title: proj.title,
-    href: proj.demoUrl && proj.demoUrl !== "#" ? proj.demoUrl : proj.repoUrl,
+    href: `/projects/${proj.slug}`,
     dates: dateStr,
     active: proj.status === "completed",
     description: proj.description,

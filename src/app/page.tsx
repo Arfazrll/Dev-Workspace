@@ -81,7 +81,7 @@ export default function Page() {
             <h2 className="text-xl font-bold">{t.about}</h2>
           </BlurFade>
           <BlurFade delay={BLUR_FADE_DELAY * 4}>
-            <div className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
+            <div className="prose max-w-full text-justify font-sans leading-relaxed text-muted-foreground dark:prose-invert">
               <Markdown>
                 {DATA.summary}
               </Markdown>
@@ -176,8 +176,22 @@ export default function Page() {
               </div>
             </div>
           </BlurFade>
-          {/* Hard Skills */}
+          {/* Tools */}
           <BlurFade delay={BLUR_FADE_DELAY * 10}>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.tools}</h3>
+              <div className="flex flex-wrap gap-2">
+                {portfolioData.tools.slice(0, 6).map((tool) => (
+                  <div key={tool.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
+                    {tool.icon && <img src={tool.icon} alt={tool.name} className="size-4 rounded overflow-hidden object-contain dark:invert" />}
+                    <span className="text-foreground text-sm font-medium">{tool.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+          {/* Hard Skills */}
+          <BlurFade delay={BLUR_FADE_DELAY * 10.5}>
             <div className="flex flex-col gap-3">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.hardSkills}</h3>
               <div className="flex flex-wrap gap-2">
@@ -190,27 +204,13 @@ export default function Page() {
             </div>
           </BlurFade>
           {/* Soft Skills */}
-          <BlurFade delay={BLUR_FADE_DELAY * 10.5}>
+          <BlurFade delay={BLUR_FADE_DELAY * 11}>
             <div className="flex flex-col gap-3">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.softSkills}</h3>
               <div className="flex flex-wrap gap-2">
                 {portfolioData.softSkills.slice(0, 6).map((skill) => (
                   <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center">
                     <span className="text-foreground text-sm font-medium">{skill.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </BlurFade>
-          {/* Tools */}
-          <BlurFade delay={BLUR_FADE_DELAY * 11}>
-            <div className="flex flex-col gap-3">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.tools}</h3>
-              <div className="flex flex-wrap gap-2">
-                {portfolioData.tools.slice(0, 6).map((tool) => (
-                  <div key={tool.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
-                    {tool.icon && <img src={tool.icon} alt={tool.name} className="size-4 rounded overflow-hidden object-contain dark:invert" />}
-                    <span className="text-foreground text-sm font-medium">{tool.name}</span>
                   </div>
                 ))}
               </div>
