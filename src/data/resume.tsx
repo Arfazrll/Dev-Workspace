@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { HomeIcon, NotebookIcon } from "lucide-react";
+import { HomeIcon, FileTextIcon } from "lucide-react";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Typescript } from "@/components/ui/svgs/typescript";
@@ -59,7 +59,6 @@ const allSkills = [...skillsWithIcons, ...skillsWithoutIcons].slice(0, 14);
 const workExperiences = p.experiences
   .filter((e: Experience) => ["internship", "freelance", "contract"].includes(e.type))
   .sort((a: Experience, b: Experience) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
-  .slice(0, 8)
   .map((e: Experience) => {
     const dates = formatDateRange(e.startDate, e.endDate, e.isOngoing);
     return {
@@ -90,7 +89,7 @@ const educationItems = p.education.map((e: Education) => {
 });
 
 // Build projects from portfolio projects
-const projectItems = p.projects.slice(0, 6).map((proj: Project) => {
+const projectItems = p.projects.map((proj: Project) => {
   const startDate = new Date(proj.startDate);
   const dateStr = proj.customTimeline || startDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
   return {
@@ -127,10 +126,9 @@ const hackathonItems = p.achievements
       : [],
   }));
 
-// Add some notable certifications to hackathons timeline
+// Add all certifications to achievements timeline
 const certItems = p.achievements
   .filter((a: Achievement) => a.category === "certification")
-  .slice(0, 10)
   .map((a: Achievement) => ({
     title: a.title,
     dates: new Date(a.date).toLocaleDateString("en-US", { month: "long", year: "numeric" }),
@@ -171,7 +169,7 @@ export const DATA = {
   skills: allSkills,
   navbar: [
     { href: "/", icon: HomeIcon, label: "Home" },
-    { href: "/blog", icon: NotebookIcon, label: "Blog" },
+    { href: p.personal.resumeUrl || "/resume", icon: FileTextIcon, label: "Resume" },
   ],
   contact: {
     email: p.personal.email,

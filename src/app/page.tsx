@@ -3,6 +3,7 @@ import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DATA } from "@/data/resume";
+import { portfolioData } from "@/data/portfolio";
 import Link from "next/link";
 import Markdown from "react-markdown";
 import ContactSection from "@/components/section/contact-section";
@@ -114,20 +115,75 @@ export default function Page() {
         </div>
       </section>
       <section id="skills">
-        <div className="flex min-h-0 flex-col gap-y-4">
+        <div className="flex min-h-0 flex-col gap-y-6">
           <BlurFade delay={BLUR_FADE_DELAY * 9}>
             <h2 className="text-xl font-bold">Skills</h2>
           </BlurFade>
-          <div className="flex flex-wrap gap-2">
-            {DATA.skills.map((skill, id) => (
-              <BlurFade key={skill.name} delay={BLUR_FADE_DELAY * 10 + id * 0.05}>
-                <div className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
-                  {skill.icon && <skill.icon className="size-4 rounded overflow-hidden object-contain" />}
-                  <span className="text-foreground text-sm font-medium">{skill.name}</span>
-                </div>
-              </BlurFade>
-            ))}
-          </div>
+          {/* Tech Stack */}
+          <BlurFade delay={BLUR_FADE_DELAY * 9.5}>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Tech Stack</h3>
+              <div className="flex flex-wrap gap-2">
+                {DATA.skills.slice(0, 10).map((skill) => (
+                  <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
+                    {skill.icon && <skill.icon className="size-4 rounded overflow-hidden object-contain" />}
+                    <span className="text-foreground text-sm font-medium">{skill.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+          {/* Hard Skills */}
+          <BlurFade delay={BLUR_FADE_DELAY * 10}>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Hard Skills</h3>
+              <div className="flex flex-wrap gap-2">
+                {portfolioData.hardSkills.slice(0, 6).map((skill) => (
+                  <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
+                    <span className="text-foreground text-sm font-medium">{skill.name}</span>
+                    <span className="text-[10px] text-muted-foreground font-medium uppercase">{skill.level}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+          {/* Soft Skills */}
+          <BlurFade delay={BLUR_FADE_DELAY * 10.5}>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Soft Skills</h3>
+              <div className="flex flex-wrap gap-2">
+                {portfolioData.softSkills.slice(0, 6).map((skill) => (
+                  <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center">
+                    <span className="text-foreground text-sm font-medium">{skill.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+          {/* Tools */}
+          <BlurFade delay={BLUR_FADE_DELAY * 11}>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Tools</h3>
+              <div className="flex flex-wrap gap-2">
+                {portfolioData.tools.slice(0, 6).map((tool) => (
+                  <div key={tool.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center">
+                    <span className="text-foreground text-sm font-medium">{tool.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </BlurFade>
+          <BlurFade delay={BLUR_FADE_DELAY * 11.5}>
+            <div className="flex justify-center">
+              <Link
+                href="/skills"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-4 py-2 w-fit flex items-center gap-1.5 group"
+              >
+                View All Skills
+                <ArrowUpRight className="size-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </Link>
+            </div>
+          </BlurFade>
         </div>
       </section>
       <section id="projects">

@@ -3,8 +3,13 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { DATA } from "@/data/resume";
 import { Timeline, TimelineItem, TimelineConnectItem } from "@/components/timeline";
+import { ChevronRight } from "lucide-react";
+
+const DEFAULT_VISIBLE = 5;
 
 export default function HackathonsSection() {
+  const visibleItems = DATA.hackathons.slice(0, DEFAULT_VISIBLE);
+
   return (
     <section id="hackathons" className="overflow-hidden">
       <div className="flex min-h-0 flex-col gap-y-8 w-full">
@@ -19,12 +24,12 @@ export default function HackathonsSection() {
           <div className="flex flex-col gap-y-3 items-center justify-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">Awards & Certifications</h2>
             <p className="text-muted-foreground md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed text-balance text-center">
-              Throughout my academic and professional journey, I&apos;ve earned {DATA.hackathons.length}+ awards and certifications across AI, Machine Learning, Cloud Computing, and Full Stack Development — continuously expanding my expertise and industry credentials.
+              Throughout my academic and professional journey, I&apos;ve earned {DATA.hackathons.length}+ awards and certifications across AI, Machine Learning, Cloud Computing, and Full Stack Development.
             </p>
           </div>
         </div>
         <Timeline>
-          {DATA.hackathons.map((hackathon) => (
+          {visibleItems.map((hackathon) => (
             <TimelineItem key={hackathon.title + hackathon.dates} className="w-full flex items-start justify-between gap-10">
               <TimelineConnectItem className="flex items-start justify-center">
                 {hackathon.image ? (
@@ -73,6 +78,17 @@ export default function HackathonsSection() {
             </TimelineItem>
           ))}
         </Timeline>
+        {DATA.hackathons.length > DEFAULT_VISIBLE && (
+          <div className="flex justify-center">
+            <Link
+              href="/achievements"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-4 py-2 w-fit flex items-center gap-1.5 group"
+            >
+              View All Achievements
+              <ChevronRight className="size-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );

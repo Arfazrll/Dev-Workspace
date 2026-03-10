@@ -10,6 +10,9 @@ import {
 import { DATA } from "@/data/resume";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+
+const DEFAULT_VISIBLE = 5;
 
 function LogoImage({ src, alt }: { src: string; alt: string }) {
   const [imageError, setImageError] = useState(false);
@@ -31,57 +34,69 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
 }
 
 export default function WorkSection() {
+  const visibleWork = DATA.work.slice(0, DEFAULT_VISIBLE);
+
   return (
-    <Accordion type="single" collapsible className="w-full grid gap-6">
-      {DATA.work.map((work, index) => (
-        <AccordionItem
-          key={`${work.company}-${index}`}
-          value={`${work.company}-${index}`}
-          className="w-full border-b-0 grid gap-2"
-        >
-          <AccordionTrigger className="hover:no-underline p-0 cursor-pointer transition-colors rounded-none group [&>svg]:hidden">
-            <div className="flex items-center gap-x-3 justify-between w-full text-left">
-              <div className="flex items-center gap-x-3 flex-1 min-w-0">
-                <LogoImage src={work.logoUrl} alt={work.company} />
-                <div className="flex-1 min-w-0 gap-0.5 flex flex-col">
-                  <div className="font-semibold leading-none flex items-center gap-2">
-                    {work.company}
-                    <span className="relative inline-flex items-center w-3.5 h-3.5">
-                      <ChevronRight
-                        className={cn(
-                          "absolute h-3.5 w-3.5 shrink-0 text-muted-foreground stroke-2 transition-all duration-300 ease-out",
-                          "translate-x-0 opacity-0",
-                          "group-hover:translate-x-1 group-hover:opacity-100",
-                          "group-data-[state=open]:opacity-0 group-data-[state=open]:translate-x-0"
-                        )}
-                      />
-                      <ChevronDown
-                        className={cn(
-                          "absolute h-3.5 w-3.5 shrink-0 text-muted-foreground stroke-2 transition-all duration-200",
-                          "opacity-0 rotate-0",
-                          "group-data-[state=open]:opacity-100 group-data-[state=open]:rotate-180"
-                        )}
-                      />
-                    </span>
-                  </div>
-                  <div className="font-sans text-sm text-muted-foreground">
-                    {work.title}
+    <div className="flex flex-col gap-6">
+      <Accordion type="single" collapsible className="w-full grid gap-6">
+        {visibleWork.map((work, index) => (
+          <AccordionItem
+            key={`${work.company}-${index}`}
+            value={`${work.company}-${index}`}
+            className="w-full border-b-0 grid gap-2"
+          >
+            <AccordionTrigger className="hover:no-underline p-0 cursor-pointer transition-colors rounded-none group [&>svg]:hidden">
+              <div className="flex items-center gap-x-3 justify-between w-full text-left">
+                <div className="flex items-center gap-x-3 flex-1 min-w-0">
+                  <LogoImage src={work.logoUrl} alt={work.company} />
+                  <div className="flex-1 min-w-0 gap-0.5 flex flex-col">
+                    <div className="font-semibold leading-none flex items-center gap-2">
+                      {work.company}
+                      <span className="relative inline-flex items-center w-3.5 h-3.5">
+                        <ChevronRight
+                          className={cn(
+                            "absolute h-3.5 w-3.5 shrink-0 text-muted-foreground stroke-2 transition-all duration-300 ease-out",
+                            "translate-x-0 opacity-0",
+                            "group-hover:translate-x-1 group-hover:opacity-100",
+                            "group-data-[state=open]:opacity-0 group-data-[state=open]:translate-x-0"
+                          )}
+                        />
+                        <ChevronDown
+                          className={cn(
+                            "absolute h-3.5 w-3.5 shrink-0 text-muted-foreground stroke-2 transition-all duration-200",
+                            "opacity-0 rotate-0",
+                            "group-data-[state=open]:opacity-100 group-data-[state=open]:rotate-180"
+                          )}
+                        />
+                      </span>
+                    </div>
+                    <div className="font-sans text-sm text-muted-foreground">
+                      {work.title}
+                    </div>
                   </div>
                 </div>
+                <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none">
+                  <span>
+                    {work.start} - {work.end ?? "Present"}
+                  </span>
+                </div>
               </div>
-              <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none">
-                <span>
-                  {work.start} - {work.end ?? "Present"}
-                </span>
-              </div>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="p-0 ml-13 text-xs sm:text-sm text-muted-foreground">
-            {work.description}
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+            </AccordionTrigger>
+            <AccordionContent className="p-0 ml-13 text-xs sm:text-sm text-muted-foreground">
+              {work.description}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+      {DATA.work.length > DEFAULT_VISIBLE && (
+        <Link
+          href="/experience"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-4 py-2 w-fit mx-auto flex items-center gap-1.5 group"
+        >
+          View All Experience
+          <ChevronRight className="size-3.5 group-hover:translate-x-0.5 transition-transform" />
+        </Link>
+      )}
+    </div>
   );
 }
-

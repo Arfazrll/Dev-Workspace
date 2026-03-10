@@ -1,0 +1,241 @@
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { ChevronLeft, ExternalLink, Github } from "lucide-react";
+import { portfolioData } from "@/data/portfolio";
+import { Badge } from "@/components/ui/badge";
+import type { Metadata } from "next";
+
+function slugify(text: string): string {
+    return text.toLowerCase().replace(/\s+/g, "-");
+}
+
+export async function generateStaticParams() {
+    return portfolioData.projects.map((project) => ({
+        slug: slugify(project.title),
+    }));
+}
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+    const { slug } = await params;
+    const project = portfolioData.projects.find((p) => slugify(p.title) === slug);
+    if (!project) return { title: "Project Not Found" };
+    return {
+        title: project.title,
+        description: project.description,
+    };
+}
+
+export default async function ProjectDetailPage({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) {
+    const { slug } = await params;
+    const project = portfolioData.projects.find((p) => slugify(p.title) === slug);
+
+    if (!project) {
+        notFound();
+    }
+
+    const startDate = new Date(project.startDate);
+    const dateStr =
+        project.customTimeline ||
+        startDate.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+
+    return (
+        <div className="flex flex-col gap-8">
+            {/* Back Navigation */}
+            <Link
+                href="/projects"
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 w-fit group"
+            >
+                <ChevronLeft className="size-3 group-hover:-translate-x-px transition-transform" />
+                Back to Projects
+            </Link>
+
+            {/* Header */}
+            <div className="flex flex-col gap-4">
+                <div className="flex flex-wrap items-center gap-2">
+                    <Badge variant="outline" className="text-xs">
+                        {project.category}
+                    </Badge>
+                    <Badge
+                        variant="outline"
+                        className={
+                            project.status === "completed"
+                                ? "text-xs border-green-500/30 text-green-700 dark:text-green-400"
+                                : "text-xs border-amber-500/30 text-amber-700 dark:text-amber-400"
+                        }
+                    >
+                        {project.status === "completed" ? "Completed" : "In Progress"}
+                    </Badge>
+                </div>
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+                    {project.title}
+                </h1>
+                <p className="text-muted-foreground text-lg">{project.description}</p>
+                <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                    <span>{dateStr}</span>
+                    {project.team && <span>• Team: {project.team}</span>}
+                    {project.role && <span>• Role: {project.role}</span>}
+                </div>
+            </div>
+
+            {/* Links */}
+            <div className="flex flex-wrap gap-3">
+                {project.demoUrl && project.demoUrl !== "#" && (
+                    <Link
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                    >
+                        <ExternalLink className="size-4" />
+                        Live Demo
+                    </Link>
+                )}
+                {project.repoUrl && (
+                    <Link
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg border border-border bg-background hover:bg-accent transition-colors"
+                    >
+                        <Github className="size-4" />
+                        Source Code
+                    </Link>
+                )}
+            </div>
+
+            {/* Long Description */}
+            {project.longDescription && (
+                <section className="flex flex-col gap-3">
+                    <h2 className="text-xl font-bold">About this Project</h2>
+                    <p className="text-muted-foreground leading-relaxed">
+                        {project.longDescription}
+                    </p>
+                </section>
+            )}
+
+            {/* Tech Stack */}
+            <section className="flex flex-col gap-3">
+                <h2 className="text-xl font-bold">Tech Stack</h2>
+                <div className="flex flex-wrap gap-2">
+                    {project.techStack.map((tech) => (
+                        <Badge key={tech} variant="secondary" className="text-xs">
+                            {tech}
+                        </Badge>
+                    ))}
+                </div>
+            </section>
+
+            {/* Tools */}
+            {project.tools.length > 0 && (
+                <section className="flex flex-col gap-3">
+                    <h2 className="text-xl font-bold">Tools Used</h2>
+                    <div className="flex flex-wrap gap-2">
+                        {project.tools.map((tool) => (
+                            <Badge key={tool} variant="outline" className="text-xs">
+                                {tool}
+                            </Badge>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {/* Features */}
+            {project.features.length > 0 && (
+                <section className="flex flex-col gap-4">
+                    <h2 className="text-xl font-bold">Key Features</h2>
+                    <div className="grid grid-cols-1 gap-4">
+                        {project.features.map((feature) => (
+                            <div
+                                key={feature.title}
+                                className="border border-border rounded-xl p-4 flex flex-col gap-3 bg-background"
+                            >
+                                <h3 className="font-semibold text-foreground">
+                                    {feature.title}
+                                </h3>
+                                <ul className="space-y-2">
+                                    {feature.items.map((item, idx) => (
+                                        <li
+                                            key={idx}
+                                            className="text-sm text-muted-foreground leading-relaxed flex items-start gap-2"
+                                        >
+                                            <span className="text-muted-foreground/50 mt-1.5 text-xs">▸</span>
+                                            <span>{item.replace(/\*\*(.*?)\*\*/g, "$1")}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {/* Highlights */}
+            {project.highlights.length > 0 && (
+                <section className="flex flex-col gap-3">
+                    <h2 className="text-xl font-bold">Highlights</h2>
+                    <div className="flex flex-wrap gap-2">
+                        {project.highlights.map((highlight) => (
+                            <Badge key={highlight} variant="secondary" className="text-xs">
+                                {highlight}
+                            </Badge>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {/* Installation */}
+            {project.installation.length > 0 && (
+                <section className="flex flex-col gap-4">
+                    <h2 className="text-xl font-bold">Installation</h2>
+                    {project.installation.map((step) => (
+                        <div key={step.title} className="flex flex-col gap-2">
+                            <h3 className="text-sm font-semibold text-muted-foreground">
+                                {step.title}
+                            </h3>
+                            <pre className="bg-muted/50 dark:bg-muted/30 border border-border rounded-lg p-4 text-sm font-mono text-foreground overflow-x-auto">
+                                <code>{step.code}</code>
+                            </pre>
+                        </div>
+                    ))}
+                </section>
+            )}
+
+            {/* Challenges & Solutions */}
+            {project.challengesAndSolutions.length > 0 && (
+                <section className="flex flex-col gap-4">
+                    <h2 className="text-xl font-bold">Challenges & Solutions</h2>
+                    <div className="grid grid-cols-1 gap-4">
+                        {project.challengesAndSolutions.map((cs, idx) => (
+                            <div
+                                key={idx}
+                                className="border border-border rounded-xl p-4 flex flex-col gap-3 bg-background"
+                            >
+                                <div className="flex flex-col gap-1">
+                                    <span className="text-xs font-semibold text-red-600 dark:text-red-400 uppercase tracking-wider">
+                                        Challenge
+                                    </span>
+                                    <p className="text-sm text-muted-foreground">{cs.problem}</p>
+                                </div>
+                                <div className="h-px bg-border" />
+                                <div className="flex flex-col gap-1">
+                                    <span className="text-xs font-semibold text-green-600 dark:text-green-400 uppercase tracking-wider">
+                                        Solution
+                                    </span>
+                                    <p className="text-sm text-muted-foreground">{cs.solution}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
+        </div>
+    );
+}
