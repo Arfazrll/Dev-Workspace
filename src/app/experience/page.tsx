@@ -11,13 +11,14 @@ import { DATA } from "@/data/resume";
 import { ChevronDown, ChevronRight, ChevronLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useTranslation } from "@/i18n/context";
 
 function LogoImage({ src, alt }: { src: string; alt: string }) {
     const [imageError, setImageError] = useState(false);
 
     if (!src || imageError) {
         return (
-            <div className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border bg-muted flex-none" />
+            <div className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border bg-muted flex-none relative z-10" />
         );
     }
 
@@ -25,13 +26,14 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
         <img
             src={src}
             alt={alt}
-            className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border overflow-hidden object-contain flex-none"
+            className="size-8 md:size-10 p-1 border rounded-full shadow ring-2 ring-border bg-background overflow-hidden object-contain flex-none relative z-10"
             onError={() => setImageError(true)}
         />
     );
 }
 
 export default function ExperiencePage() {
+    const { t } = useTranslation();
     return (
         <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-4">
@@ -40,15 +42,15 @@ export default function ExperiencePage() {
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 w-fit group"
                 >
                     <ChevronLeft className="size-3 group-hover:-translate-x-px transition-transform" />
-                    Back to Home
+                    {t.backToHome}
                 </Link>
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">All Experience</h1>
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">{t.allExperience}</h1>
                 <p className="text-muted-foreground">
-                    A comprehensive overview of my professional journey — {DATA.work.length} roles across research, engineering, and development.
+                    {t.experienceDescription(DATA.work.length)}
                 </p>
             </div>
 
-            <Accordion type="single" collapsible className="w-full grid gap-6">
+            <Accordion type="single" collapsible className="w-full grid gap-6 relative before:absolute before:inset-y-0 before:left-4 md:before:left-5 before:w-px before:bg-border/60">
                 {DATA.work.map((work, index) => (
                     <AccordionItem
                         key={`${work.company}-${index}`}
@@ -56,11 +58,11 @@ export default function ExperiencePage() {
                         className="w-full border-b-0 grid gap-2"
                     >
                         <AccordionTrigger className="hover:no-underline p-0 cursor-pointer transition-colors rounded-none group [&>svg]:hidden">
-                            <div className="flex items-center gap-x-3 justify-between w-full text-left">
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-y-1 gap-x-3 justify-between w-full text-left">
                                 <div className="flex items-center gap-x-3 flex-1 min-w-0">
                                     <LogoImage src={work.logoUrl} alt={work.company} />
                                     <div className="flex-1 min-w-0 gap-0.5 flex flex-col">
-                                        <div className="font-semibold leading-none flex items-center gap-2">
+                                        <div className="font-semibold leading-tight flex items-center gap-2">
                                             {work.company}
                                             <span className="relative inline-flex items-center w-3.5 h-3.5">
                                                 <ChevronRight
@@ -85,7 +87,7 @@ export default function ExperiencePage() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none">
+                                <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground sm:text-right flex-none ml-11 sm:ml-0">
                                     <span>
                                         {work.start} - {work.end ?? "Present"}
                                     </span>

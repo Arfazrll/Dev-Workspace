@@ -1,18 +1,15 @@
+"use client";
 import BlurFade from "@/components/magicui/blur-fade";
 import { ProjectCard } from "@/components/project-card";
 import { DATA } from "@/data/resume";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-    title: "Projects",
-    description: "All projects — AI/ML, Full Stack, Blockchain, and more.",
-};
+import { useTranslation } from "@/i18n/context";
 
 const BLUR_FADE_DELAY = 0.04;
 
 export default function ProjectsPage() {
+    const { t } = useTranslation();
     return (
         <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-4">
@@ -21,11 +18,11 @@ export default function ProjectsPage() {
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 w-fit group"
                 >
                     <ChevronLeft className="size-3 group-hover:-translate-x-px transition-transform" />
-                    Back to Home
+                    {t.backToHome}
                 </Link>
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">All Projects</h1>
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">{t.allProjects}</h1>
                 <p className="text-muted-foreground">
-                    A comprehensive collection of {DATA.projects.length} projects spanning AI/ML, Full Stack Development, Blockchain, and more.
+                    {t.allProjectsDescription(DATA.projects.length)}
                 </p>
             </div>
 

@@ -4,13 +4,13 @@ export const portfolioData: PortfolioData = {
     personal: {
         name: 'Syahril Arfian Almazril',
         title: 'AI Engineer',
-        subtitle: 'AI Engineer • Full Stack Developer • Blockchain Enthusiast | Bridging Technical Innovation with Strategic Execution',
+        subtitle: 'AI Engineer & Software Engineer | Bridging Technical Innovation with Strategic Execution',
         bio: 'An Information Technology student at Telkom University with a distinctive profile that fuses deep technical expertise in Artificial Intelligence with proven strategic leadership. Through hands-on experience as an AI Researcher at the Cyber Physical System Laboratory, I develop complex technical solutions from architecting IoT systems and designing software blueprints to engineering advanced Machine Learning models. Currently exploring AI Agents and Blockchain/Web3 technologies. Driven to leverage this integrated skill set to build initiatives that bridge technical innovation with effective execution.',
         avatar: '/about/arfazrll.jpeg',
         location: 'DKI Jakarta, Indonesia',
         email: 'azril4974@gmail.com',
         phone: '+6281511463282',
-        resumeUrl: '/resume',
+        resumeUrl: 'https://drive.google.com/file/d/1mfYs2MOHpwEFLe-Ld4OCcgS1Lbo6wW7O/view?usp=sharing',
         website: 'https://personal-iqyuflz4z-arfazrlls-projects.vercel.app',
         languages: [
             { name: 'Indonesian', level: 'Native' },
@@ -2493,7 +2493,6 @@ WAKATIME_API_KEY=your_wakatime_key`
         { name: 'OpenCV', icon: 'https://cdn.simpleicons.org/opencv', category: 'library' },
         { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi', category: 'framework' },
         { name: 'Flask', icon: 'https://cdn.simpleicons.org/flask', category: 'framework' },
-        { name: 'Hugging Face', icon: 'https://cdn.simpleicons.org/huggingface', category: 'library' },
     ],
     hardSkills: [
         { name: 'System Architecture', level: 'intermediate', category: 'software', description: 'Designing robust, scalable, and high-performance system architectures for complex applications.' },

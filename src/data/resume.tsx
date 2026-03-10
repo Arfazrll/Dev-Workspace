@@ -191,13 +191,13 @@ export const DATA = {
         name: "X",
         url: twitter?.url || "https://twitter.com/arfazrll",
         icon: Icons.x,
-        navbar: true,
+        navbar: false,
       },
       Instagram: {
         name: "Instagram",
         url: instagram?.url || "https://instagram.com/arfazrll",
-        icon: Icons.github, // Reuse available icon — no dedicated Instagram icon in Icons
-        navbar: false,
+        icon: Icons.instagram,
+        navbar: true,
       },
       email: {
         name: "Send Email",

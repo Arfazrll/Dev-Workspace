@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
@@ -10,23 +11,55 @@ import ContactSection from "@/components/section/contact-section";
 import HackathonsSection from "@/components/section/hackathons-section";
 import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, BadgeCheck } from "lucide-react";
+import { useTranslation } from "@/i18n/context";
 
 const BLUR_FADE_DELAY = 0.04;
 
+const homepageTechStackAI = [
+  { name: 'Python', icon: 'https://cdn.simpleicons.org/python' },
+  { name: 'LangChain', icon: 'https://cdn.simpleicons.org/langchain' },
+  { name: 'TensorFlow', icon: 'https://cdn.simpleicons.org/tensorflow' },
+  { name: 'Pandas', icon: 'https://cdn.simpleicons.org/pandas' },
+  { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi' },
+];
+
+const homepageTechStackSoftware = [
+  { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript' },
+  { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript' },
+  { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/white' },
+  { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql' },
+  { name: 'Docker', icon: 'https://cdn.simpleicons.org/docker' },
+];
+
+const homepageHardSkills = [
+  { name: 'Data Science' },
+  { name: 'Machine Learning' },
+  { name: 'Deep Learning' },
+  { name: 'NLP' },
+  { name: 'Full Stack Developer' },
+  { name: 'System Architecture' },
+];
+
 export default function Page() {
+  const { t } = useTranslation();
   return (
     <main className="min-h-dvh flex flex-col gap-14 relative">
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
           <div className="gap-2 gap-y-6 flex flex-col md:flex-row justify-between">
             <div className="gap-2 flex flex-col order-2 md:order-1">
-              <BlurFadeText
-                delay={BLUR_FADE_DELAY}
-                className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl"
-                yOffset={8}
-                text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
-              />
+              <BlurFade delay={BLUR_FADE_DELAY} yOffset={8}>
+                <h1 className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl leading-tight">
+                  <span className="block">{t.heroPrefix}</span>
+                  <span>{DATA.name}</span>
+                  <BadgeCheck
+                    className="inline-block ml-2 size-7 md:size-9 text-[#1DA1F2] -mt-1"
+                    fill="currentColor"
+                    stroke="white"
+                  />
+                </h1>
+              </BlurFade>
               <BlurFadeText
                 className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl"
                 delay={BLUR_FADE_DELAY}
@@ -45,7 +78,7 @@ export default function Page() {
       <section id="about">
         <div className="flex min-h-0 flex-col gap-y-4">
           <BlurFade delay={BLUR_FADE_DELAY * 3}>
-            <h2 className="text-xl font-bold">About</h2>
+            <h2 className="text-xl font-bold">{t.about}</h2>
           </BlurFade>
           <BlurFade delay={BLUR_FADE_DELAY * 4}>
             <div className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
@@ -59,7 +92,7 @@ export default function Page() {
       <section id="work">
         <div className="flex min-h-0 flex-col gap-y-6">
           <BlurFade delay={BLUR_FADE_DELAY * 5}>
-            <h2 className="text-xl font-bold">Work Experience</h2>
+            <h2 className="text-xl font-bold">{t.workExperience}</h2>
           </BlurFade>
           <BlurFade delay={BLUR_FADE_DELAY * 6}>
             <WorkSection />
@@ -69,7 +102,7 @@ export default function Page() {
       <section id="education">
         <div className="flex min-h-0 flex-col gap-y-6">
           <BlurFade delay={BLUR_FADE_DELAY * 7}>
-            <h2 className="text-xl font-bold">Education</h2>
+            <h2 className="text-xl font-bold">{t.education}</h2>
           </BlurFade>
           <div className="flex flex-col gap-8">
             {DATA.education.map((education, index) => (
@@ -117,31 +150,40 @@ export default function Page() {
       <section id="skills">
         <div className="flex min-h-0 flex-col gap-y-6">
           <BlurFade delay={BLUR_FADE_DELAY * 9}>
-            <h2 className="text-xl font-bold">Skills</h2>
+            <h2 className="text-xl font-bold">{t.skills}</h2>
           </BlurFade>
           {/* Tech Stack */}
           <BlurFade delay={BLUR_FADE_DELAY * 9.5}>
             <div className="flex flex-col gap-3">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Tech Stack</h3>
-              <div className="flex flex-wrap gap-2">
-                {DATA.skills.slice(0, 10).map((skill) => (
-                  <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
-                    {skill.icon && <skill.icon className="size-4 rounded overflow-hidden object-contain" />}
-                    <span className="text-foreground text-sm font-medium">{skill.name}</span>
-                  </div>
-                ))}
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.techStack}</h3>
+              <div className="flex flex-col gap-2">
+                <div className="flex flex-wrap gap-2">
+                  {homepageTechStackAI.map((skill) => (
+                    <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
+                      {skill.icon && <img src={skill.icon} alt={skill.name} className="size-4 rounded overflow-hidden object-contain dark:invert" />}
+                      <span className="text-foreground text-sm font-medium">{skill.name}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {homepageTechStackSoftware.map((skill) => (
+                    <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
+                      {skill.icon && <img src={skill.icon} alt={skill.name} className="size-4 rounded overflow-hidden object-contain dark:invert" />}
+                      <span className="text-foreground text-sm font-medium">{skill.name}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </BlurFade>
           {/* Hard Skills */}
           <BlurFade delay={BLUR_FADE_DELAY * 10}>
             <div className="flex flex-col gap-3">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Hard Skills</h3>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.hardSkills}</h3>
               <div className="flex flex-wrap gap-2">
-                {portfolioData.hardSkills.slice(0, 6).map((skill) => (
+                {homepageHardSkills.map((skill) => (
                   <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
                     <span className="text-foreground text-sm font-medium">{skill.name}</span>
-                    <span className="text-[10px] text-muted-foreground font-medium uppercase">{skill.level}</span>
                   </div>
                 ))}
               </div>
@@ -150,7 +192,7 @@ export default function Page() {
           {/* Soft Skills */}
           <BlurFade delay={BLUR_FADE_DELAY * 10.5}>
             <div className="flex flex-col gap-3">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Soft Skills</h3>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.softSkills}</h3>
               <div className="flex flex-wrap gap-2">
                 {portfolioData.softSkills.slice(0, 6).map((skill) => (
                   <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center">
@@ -163,10 +205,11 @@ export default function Page() {
           {/* Tools */}
           <BlurFade delay={BLUR_FADE_DELAY * 11}>
             <div className="flex flex-col gap-3">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Tools</h3>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.tools}</h3>
               <div className="flex flex-wrap gap-2">
                 {portfolioData.tools.slice(0, 6).map((tool) => (
-                  <div key={tool.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center">
+                  <div key={tool.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
+                    {tool.icon && <img src={tool.icon} alt={tool.name} className="size-4 rounded overflow-hidden object-contain dark:invert" />}
                     <span className="text-foreground text-sm font-medium">{tool.name}</span>
                   </div>
                 ))}
@@ -179,7 +222,7 @@ export default function Page() {
                 href="/skills"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-4 py-2 w-fit flex items-center gap-1.5 group"
               >
-                View All Skills
+                {t.viewAllSkills}
                 <ArrowUpRight className="size-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
             </div>

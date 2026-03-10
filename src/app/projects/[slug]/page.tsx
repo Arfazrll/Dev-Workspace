@@ -1,40 +1,23 @@
+"use client";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { ChevronLeft, ExternalLink, Github } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 import { Badge } from "@/components/ui/badge";
-import type { Metadata } from "next";
+import { useTranslation } from "@/i18n/context";
+import { notFound } from "next/navigation";
+import { use } from "react";
 
 function slugify(text: string): string {
     return text.toLowerCase().replace(/\s+/g, "-");
 }
 
-export async function generateStaticParams() {
-    return portfolioData.projects.map((project) => ({
-        slug: slugify(project.title),
-    }));
-}
-
-export async function generateMetadata({
-    params,
-}: {
-    params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-    const { slug } = await params;
-    const project = portfolioData.projects.find((p) => slugify(p.title) === slug);
-    if (!project) return { title: "Project Not Found" };
-    return {
-        title: project.title,
-        description: project.description,
-    };
-}
-
-export default async function ProjectDetailPage({
+export default function ProjectDetailPage({
     params,
 }: {
     params: Promise<{ slug: string }>;
 }) {
-    const { slug } = await params;
+    const { slug } = use(params);
+    const { t } = useTranslation();
     const project = portfolioData.projects.find((p) => slugify(p.title) === slug);
 
     if (!project) {
@@ -54,7 +37,7 @@ export default async function ProjectDetailPage({
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 w-fit group"
             >
                 <ChevronLeft className="size-3 group-hover:-translate-x-px transition-transform" />
-                Back to Projects
+                {t.backToProjects}
             </Link>
 
             {/* Header */}
@@ -71,7 +54,7 @@ export default async function ProjectDetailPage({
                                 : "text-xs border-amber-500/30 text-amber-700 dark:text-amber-400"
                         }
                     >
-                        {project.status === "completed" ? "Completed" : "In Progress"}
+                        {project.status === "completed" ? t.completed : t.inProgress}
                     </Badge>
                 </div>
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">
@@ -95,7 +78,7 @@ export default async function ProjectDetailPage({
                         className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
                     >
                         <ExternalLink className="size-4" />
-                        Live Demo
+                        {t.liveDemo}
                     </Link>
                 )}
                 {project.repoUrl && (
@@ -106,7 +89,7 @@ export default async function ProjectDetailPage({
                         className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg border border-border bg-background hover:bg-accent transition-colors"
                     >
                         <Github className="size-4" />
-                        Source Code
+                        {t.sourceCode}
                     </Link>
                 )}
             </div>
@@ -114,7 +97,7 @@ export default async function ProjectDetailPage({
             {/* Long Description */}
             {project.longDescription && (
                 <section className="flex flex-col gap-3">
-                    <h2 className="text-xl font-bold">About this Project</h2>
+                    <h2 className="text-xl font-bold">{t.aboutThisProject}</h2>
                     <p className="text-muted-foreground leading-relaxed">
                         {project.longDescription}
                     </p>
@@ -123,7 +106,7 @@ export default async function ProjectDetailPage({
 
             {/* Tech Stack */}
             <section className="flex flex-col gap-3">
-                <h2 className="text-xl font-bold">Tech Stack</h2>
+                <h2 className="text-xl font-bold">{t.techStack}</h2>
                 <div className="flex flex-wrap gap-2">
                     {project.techStack.map((tech) => (
                         <Badge key={tech} variant="secondary" className="text-xs">
@@ -136,7 +119,7 @@ export default async function ProjectDetailPage({
             {/* Tools */}
             {project.tools.length > 0 && (
                 <section className="flex flex-col gap-3">
-                    <h2 className="text-xl font-bold">Tools Used</h2>
+                    <h2 className="text-xl font-bold">{t.toolsUsed}</h2>
                     <div className="flex flex-wrap gap-2">
                         {project.tools.map((tool) => (
                             <Badge key={tool} variant="outline" className="text-xs">
@@ -150,7 +133,7 @@ export default async function ProjectDetailPage({
             {/* Features */}
             {project.features.length > 0 && (
                 <section className="flex flex-col gap-4">
-                    <h2 className="text-xl font-bold">Key Features</h2>
+                    <h2 className="text-xl font-bold">{t.keyFeatures}</h2>
                     <div className="grid grid-cols-1 gap-4">
                         {project.features.map((feature) => (
                             <div
@@ -180,7 +163,7 @@ export default async function ProjectDetailPage({
             {/* Highlights */}
             {project.highlights.length > 0 && (
                 <section className="flex flex-col gap-3">
-                    <h2 className="text-xl font-bold">Highlights</h2>
+                    <h2 className="text-xl font-bold">{t.highlights}</h2>
                     <div className="flex flex-wrap gap-2">
                         {project.highlights.map((highlight) => (
                             <Badge key={highlight} variant="secondary" className="text-xs">
@@ -194,7 +177,7 @@ export default async function ProjectDetailPage({
             {/* Installation */}
             {project.installation.length > 0 && (
                 <section className="flex flex-col gap-4">
-                    <h2 className="text-xl font-bold">Installation</h2>
+                    <h2 className="text-xl font-bold">{t.installation}</h2>
                     {project.installation.map((step) => (
                         <div key={step.title} className="flex flex-col gap-2">
                             <h3 className="text-sm font-semibold text-muted-foreground">
@@ -211,7 +194,7 @@ export default async function ProjectDetailPage({
             {/* Challenges & Solutions */}
             {project.challengesAndSolutions.length > 0 && (
                 <section className="flex flex-col gap-4">
-                    <h2 className="text-xl font-bold">Challenges & Solutions</h2>
+                    <h2 className="text-xl font-bold">{t.challengesSolutions}</h2>
                     <div className="grid grid-cols-1 gap-4">
                         {project.challengesAndSolutions.map((cs, idx) => (
                             <div
@@ -220,14 +203,14 @@ export default async function ProjectDetailPage({
                             >
                                 <div className="flex flex-col gap-1">
                                     <span className="text-xs font-semibold text-red-600 dark:text-red-400 uppercase tracking-wider">
-                                        Challenge
+                                        {t.challenge}
                                     </span>
                                     <p className="text-sm text-muted-foreground">{cs.problem}</p>
                                 </div>
                                 <div className="h-px bg-border" />
                                 <div className="flex flex-col gap-1">
                                     <span className="text-xs font-semibold text-green-600 dark:text-green-400 uppercase tracking-wider">
-                                        Solution
+                                        {t.solution}
                                     </span>
                                     <p className="text-sm text-muted-foreground">{cs.solution}</p>
                                 </div>

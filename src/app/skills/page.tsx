@@ -1,14 +1,12 @@
+"use client";
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ChevronDown } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { portfolioData } from "@/data/portfolio";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-    title: "Skills",
-    description: "Technical skills, frameworks, tools, and expertise areas.",
-};
+import { useTranslation } from "@/i18n/context";
 
 export default function SkillsPage() {
+    const { t } = useTranslation();
     const { techStack, hardSkills, softSkills, tools } = portfolioData;
 
     // Group hard skills by category
@@ -42,69 +40,25 @@ export default function SkillsPage() {
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 w-fit group"
                 >
                     <ChevronLeft className="size-3 group-hover:-translate-x-px transition-transform" />
-                    Back to Home
+                    {t.backToHome}
                 </Link>
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">Skills & Expertise</h1>
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">{t.skillsExpertise}</h1>
                 <p className="text-muted-foreground">
-                    A complete overview of my technical stack, expertise areas, and tools.
+                    {t.skillsDescription}
                 </p>
             </div>
 
             {/* Tech Stack */}
             <section className="flex flex-col gap-4">
-                <h2 className="text-xl font-bold">Tech Stack</h2>
+                <h2 className="text-xl font-bold">{t.techStack}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                     {techStack.map((tech) => (
                         <div
                             key={tech.name}
                             className="border bg-background border-border rounded-xl p-3 flex items-center gap-3 hover:ring-2 hover:ring-border/50 transition-all"
                         >
+                            {tech.icon && <img src={tech.icon} alt={tech.name} className="size-5 rounded overflow-hidden object-contain dark:invert" />}
                             <span className="text-sm font-medium text-foreground">{tech.name}</span>
-                            <span className="text-[10px] text-muted-foreground uppercase ml-auto">{tech.category}</span>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Hard Skills by Category */}
-            <section className="flex flex-col gap-6">
-                <h2 className="text-xl font-bold">Hard Skills</h2>
-                {Object.entries(hardSkillsByCategory).map(([category, skills]) => (
-                    <div key={category} className="flex flex-col gap-3">
-                        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                            {categoryLabels[category] || category}
-                        </h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            {skills.map((skill) => (
-                                <div
-                                    key={skill.name}
-                                    className="border bg-background border-border rounded-xl p-4 flex flex-col gap-2"
-                                >
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-sm font-semibold text-foreground">{skill.name}</span>
-                                        <span className={`text-[10px] font-medium uppercase px-2 py-0.5 rounded-full border ${levelColors[skill.level] || ""}`}>
-                                            {skill.level}
-                                        </span>
-                                    </div>
-                                    <p className="text-xs text-muted-foreground leading-relaxed">{skill.description}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </section>
-
-            {/* Soft Skills */}
-            <section className="flex flex-col gap-4">
-                <h2 className="text-xl font-bold">Soft Skills</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {softSkills.map((skill) => (
-                        <div
-                            key={skill.name}
-                            className="border bg-background border-border rounded-xl p-4 flex flex-col gap-1"
-                        >
-                            <span className="text-sm font-semibold text-foreground">{skill.name}</span>
-                            <p className="text-xs text-muted-foreground">{skill.description}</p>
                         </div>
                     ))}
                 </div>
@@ -112,18 +66,82 @@ export default function SkillsPage() {
 
             {/* Tools */}
             <section className="flex flex-col gap-4">
-                <h2 className="text-xl font-bold">Tools</h2>
+                <h2 className="text-xl font-bold">{t.tools}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                     {tools.map((tool) => (
                         <div
                             key={tool.name}
                             className="border bg-background border-border rounded-xl p-3 flex items-center gap-3 hover:ring-2 hover:ring-border/50 transition-all"
                         >
+                            {tool.icon && <img src={tool.icon} alt={tool.name} className="size-5 rounded overflow-hidden object-contain dark:invert" />}
                             <span className="text-sm font-medium text-foreground">{tool.name}</span>
-                            <span className="text-[10px] text-muted-foreground uppercase ml-auto">{tool.category}</span>
                         </div>
                     ))}
                 </div>
+            </section>
+
+            {/* Hard Skills by Category */}
+            <section className="flex flex-col gap-6">
+                <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="hard-skills" className="border-none">
+                        <AccordionTrigger className="hover:no-underline py-0">
+                            <h2 className="text-xl font-bold">{t.hardSkills}</h2>
+                            <ChevronDown className="size-5 text-muted-foreground transition-transform duration-200" />
+                        </AccordionTrigger>
+                        <AccordionContent className="pt-6">
+                            <div className="flex flex-col gap-6">
+                                {Object.entries(hardSkillsByCategory).map(([category, skills]) => (
+                                    <div key={category} className="flex flex-col gap-3">
+                                        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                                            {categoryLabels[category] || category}
+                                        </h3>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            {skills.map((skill) => (
+                                                <div
+                                                    key={skill.name}
+                                                    className="border bg-background border-border rounded-xl p-4 flex flex-col gap-2"
+                                                >
+                                                    <div className="flex items-center justify-between">
+                                                        <span className="text-sm font-semibold text-foreground">{skill.name}</span>
+                                                        <span className={`text-[10px] font-medium uppercase px-2 py-0.5 rounded-full border ${levelColors[skill.level] || ""}`}>
+                                                            {skill.level}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-xs text-muted-foreground leading-relaxed">{skill.description}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
+            </section>
+
+            {/* Soft Skills */}
+            <section className="flex flex-col gap-4">
+                <Accordion type="single" collapsible className="w-full">
+                    <AccordionItem value="soft-skills" className="border-none">
+                        <AccordionTrigger className="hover:no-underline py-0">
+                            <h2 className="text-xl font-bold">{t.softSkills}</h2>
+                            <ChevronDown className="size-5 text-muted-foreground transition-transform duration-200" />
+                        </AccordionTrigger>
+                        <AccordionContent className="pt-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                {softSkills.map((skill) => (
+                                    <div
+                                        key={skill.name}
+                                        className="border bg-background border-border rounded-xl p-4 flex flex-col gap-1"
+                                    >
+                                        <span className="text-sm font-semibold text-foreground">{skill.name}</span>
+                                        <p className="text-xs text-muted-foreground">{skill.description}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </AccordionContent>
+                    </AccordionItem>
+                </Accordion>
             </section>
         </div>
     );
