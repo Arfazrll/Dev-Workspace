@@ -88,6 +88,6 @@ export const en = {
     pageNotFound: "Page Not Found",
     pageNotFoundDescription: "The page you're looking for doesn't exist or may have been moved.",
     goToHome: "Go to Home",
-} as const;
+};
 
 export type TranslationKeys = typeof en;

@@ -90,4 +90,4 @@ export const id: TranslationKeys = {
     pageNotFound: "Halaman Tidak Ditemukan",
     pageNotFoundDescription: "Halaman yang Anda cari tidak ada atau mungkin telah dipindahkan.",
     goToHome: "Ke Beranda",
-} as const;
+};
