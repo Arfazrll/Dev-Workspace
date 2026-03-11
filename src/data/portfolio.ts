@@ -2699,50 +2699,138 @@ WAKATIME_API_KEY=your_wakatime_key`
     gallery: [
         {
             id: 'gal-1',
-            title: 'CPS Lab Research',
-            description: 'Deep Learning research workshop at Cyber Physical System Laboratory.',
+            title: 'Professional Portrait',
+            description: 'A professional portrait session.',
             date: '2025-01-20',
             type: 'image',
-            url: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2000&auto=format&fit=crop',
-            category: 'research'
+            url: '/gallery/Foto Utama.jpeg',
+            category: 'personal'
         },
         {
             id: 'gal-2',
-            title: 'Smart City Symposium',
-            description: 'Presenting AIoT solutions for sustainable urban development.',
-            date: '2024-12-15',
-            type: 'video',
-            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Placeholder video
-            thumbnail: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop',
-            category: 'event'
+            title: 'Research Activity',
+            description: 'Snapshots from various research activities.',
+            date: '2025-01-15',
+            type: 'image',
+            url: '/gallery/FotoSC1.jpeg',
+            category: 'research'
         },
         {
             id: 'gal-3',
-            title: 'Neural Network Visualization',
-            description: 'Custom visualization of a Convolutional Neural Network architecture.',
-            date: '2024-11-30',
+            title: 'Lab Work Session',
+            description: 'Productive hours at the CPS Laboratory.',
+            date: '2025-01-10',
             type: 'image',
-            url: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?q=80&w=2000&auto=format&fit=crop',
+            url: '/gallery/FotoSC2.jpeg',
             category: 'technical'
         },
         {
             id: 'gal-4',
-            title: 'Blockchain Hackathon',
-            description: 'Building decentralized finance solutions in 48 hours.',
-            date: '2024-10-25',
+            title: 'Networking Practicum',
+            description: 'Assisting students with computer network labs.',
+            date: '2024-12-20',
             type: 'image',
-            url: 'https://images.unsplash.com/photo-1516245834210-c4c142787335?q=80&w=2000&auto=format&fit=crop',
-            category: 'event'
+            url: '/gallery/computernetworkpracticumassistant2.jpg',
+            category: 'teaching'
         },
         {
             id: 'gal-5',
-            title: 'IoT Prototype Demo',
-            description: 'Testing real-time sensor integration with cloud platforms.',
-            date: '2024-09-15',
-            type: 'video',
-            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-            thumbnail: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2000&auto=format&fit=crop',
+            title: 'Research Collaboration',
+            description: 'Working together on innovative AI research.',
+            date: '2024-11-15',
+            type: 'image',
+            url: '/gallery/researchassistant1.jpg',
+            category: 'research'
+        },
+        {
+            id: 'gal-6',
+            title: 'Campus Expo Logistics',
+            description: 'Managing the logistics for university-wide events.',
+            date: '2024-10-05',
+            type: 'image',
+            url: '/gallery/logisticsoperatorcampusexpo20242.jpg',
+            category: 'event'
+        },
+        {
+            id: 'gal-7',
+            title: 'Academic Division Tasks',
+            description: 'Coordinating with the Academic Affairs team.',
+            date: '2024-09-10',
+            type: 'image',
+            url: '/gallery/academicaffairsdivision1.jpg',
+            category: 'work'
+        },
+        {
+            id: 'gal-8',
+            title: 'Strategic Coordination',
+            description: 'High-level planning and team synchronization.',
+            date: '2025-02-01',
+            type: 'image',
+            url: '/gallery/FotoSC3.jpeg',
             category: 'technical'
+        },
+        {
+            id: 'gal-9',
+            title: 'Development Focus',
+            description: 'Intense software development and debugging.',
+            date: '2025-02-05',
+            type: 'image',
+            url: '/gallery/FotoSC4.jpeg',
+            category: 'technical'
+        },
+        {
+            id: 'gal-10',
+            title: 'Innovation Lab',
+            description: 'Exploring new technologies in the lab.',
+            date: '2025-02-10',
+            type: 'image',
+            url: '/gallery/FotoSC5.jpeg',
+            category: 'technical'
+        },
+        {
+            id: 'gal-11',
+            title: 'Data Entry Operations',
+            description: 'Managing system data and precision entry.',
+            date: '2024-08-15',
+            type: 'image',
+            url: '/gallery/dataentryassistant1.jpg',
+            category: 'work'
+        },
+        {
+            id: 'gal-12',
+            title: 'Leadership Development',
+            description: 'AIESEC Future Leaders program sessions.',
+            date: '2024-10-20',
+            type: 'image',
+            url: '/gallery/delegateaiesecfutureleaders20241.jpg',
+            category: 'leadership'
+        },
+        {
+            id: 'gal-13',
+            title: 'Environmental Hygiene Team',
+            description: 'Volunteering for environmental cleanup initiatives.',
+            date: '2024-07-25',
+            type: 'image',
+            url: '/gallery/environmentalhygieneteam1.jpg',
+            category: 'volunteer'
+        },
+        {
+            id: 'gal-14',
+            title: 'Community Hygiene Effort',
+            description: 'Working together for a cleaner campus.',
+            date: '2024-07-26',
+            type: 'image',
+            url: '/gallery/environmentalhygieneteam2.jpg',
+            category: 'volunteer'
+        },
+        {
+            id: 'gal-15',
+            title: 'Advanced AI Research',
+            description: 'Analyzing complex data patterns in the lab.',
+            date: '2024-11-20',
+            type: 'image',
+            url: '/gallery/researchassistant2.jpg',
+            category: 'research'
         }
     ],
 };

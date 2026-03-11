@@ -17,6 +17,8 @@ export const id: TranslationKeys = {
     skills: "Keahlian",
     projects: "Proyek",
     achievements: "Pencapaian",
+    gallery: "Galeri",
+    viewAll: "Lihat Semua",
     contact: "Kontak",
 
     // Skills categories

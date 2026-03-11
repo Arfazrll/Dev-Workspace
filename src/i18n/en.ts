@@ -15,6 +15,8 @@ export const en = {
     skills: "Skills",
     projects: "Projects",
     achievements: "Achievements",
+    gallery: "Gallery",
+    viewAll: "View All",
     contact: "Contact",
 
     // Skills categories

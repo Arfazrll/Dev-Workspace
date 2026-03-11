@@ -11,6 +11,7 @@ import ContactSection from "@/components/section/contact-section";
 import HackathonsSection from "@/components/section/hackathons-section";
 import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
+import GallerySection from "@/components/section/gallery-section";
 import { ArrowUpRight, BadgeCheck, Briefcase, MapPin } from "lucide-react";
 import { useTranslation } from "@/i18n/context";
 import { RealTimeClock } from "@/components/real-time-clock";
@@ -34,13 +35,20 @@ const homepageTechStackSoftware = [
 ];
 
 const homepageHardSkills = [
-  { name: 'Data Science' },
-  { name: 'Machine Learning' },
-  { name: 'Deep Learning' },
-  { name: 'NLP' },
-  { name: 'Full Stack Developer' },
-  { name: 'System Architecture' },
+  { name: 'Data Science', level: 'expert' },
+  { name: 'Machine Learning', level: 'advanced' },
+  { name: 'Deep Learning', level: 'advanced' },
+  { name: 'NLP', level: 'advanced' },
+  { name: 'Full Stack Developer', level: 'expert' },
+  { name: 'System Architecture', level: 'intermediate' },
 ];
+
+const levelColors: Record<string, string> = {
+  expert: "border-green-500/50 ring-green-500/20",
+  advanced: "border-blue-500/50 ring-blue-500/20",
+  intermediate: "border-amber-500/50 ring-amber-500/20",
+  beginner: "border-gray-500/50 ring-gray-500/20",
+};
 
 export default function Page() {
   const { t } = useTranslation();
@@ -174,23 +182,19 @@ export default function Page() {
           <BlurFade delay={BLUR_FADE_DELAY * 9.5}>
             <div className="flex flex-col gap-3">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.techStack}</h3>
-              <div className="flex flex-col gap-2">
-                <div className="flex flex-wrap gap-2">
-                  {homepageTechStackAI.map((skill) => (
-                    <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
-                      {skill.icon && <img src={skill.icon} alt={skill.name} className="size-4 rounded overflow-hidden object-contain dark:invert" />}
-                      <span className="text-foreground text-sm font-medium">{skill.name}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {homepageTechStackSoftware.map((skill) => (
-                    <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
-                      {skill.icon && <img src={skill.icon} alt={skill.name} className="size-4 rounded overflow-hidden object-contain dark:invert" />}
-                      <span className="text-foreground text-sm font-medium">{skill.name}</span>
-                    </div>
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-2">
+                {homepageTechStackAI.map((skill) => (
+                  <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
+                    {skill.icon && <img src={skill.icon} alt={skill.name} className="size-4 rounded overflow-hidden object-contain dark:invert" />}
+                    <span className="text-foreground text-sm font-medium">{skill.name}</span>
+                  </div>
+                ))}
+                {homepageTechStackSoftware.map((skill) => (
+                  <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
+                    {skill.icon && <img src={skill.icon} alt={skill.name} className="size-4 rounded overflow-hidden object-contain dark:invert" />}
+                    <span className="text-foreground text-sm font-medium">{skill.name}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </BlurFade>
@@ -214,7 +218,10 @@ export default function Page() {
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.hardSkills}</h3>
               <div className="flex flex-wrap gap-2">
                 {homepageHardSkills.map((skill) => (
-                  <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
+                  <div
+                    key={skill.name}
+                    className={`border bg-background ${levelColors[skill.level] || "border-border ring-border/20"} ring-2 rounded-xl h-8 w-fit px-4 flex items-center gap-2 transition-colors duration-300`}
+                  >
                     <span className="text-foreground text-sm font-medium">{skill.name}</span>
                   </div>
                 ))}
@@ -255,6 +262,11 @@ export default function Page() {
       <section id="hackathons">
         <BlurFade delay={BLUR_FADE_DELAY * 13}>
           <HackathonsSection />
+        </BlurFade>
+      </section>
+      <section id="gallery">
+        <BlurFade delay={BLUR_FADE_DELAY * 14.5}>
+          <GallerySection />
         </BlurFade>
       </section>
       <section id="contact">

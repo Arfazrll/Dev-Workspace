@@ -5,7 +5,8 @@ import { portfolioData } from "@/data/portfolio";
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "@/i18n/context";
 import { notFound } from "next/navigation";
-import { use } from "react";
+import { use, useState, useEffect } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
 function slugify(text: string): string {
     return text.toLowerCase().replace(/\s+/g, "-");
@@ -28,6 +29,22 @@ export default function ProjectDetailPage({
     const dateStr =
         project.customTimeline ||
         startDate.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [imageError, setImageError] = useState(false);
+
+    const images = project.images || [];
+
+    useEffect(() => {
+        if (images.length > 1) {
+            const interval = setInterval(() => {
+                setCurrentIndex((prev) => (prev + 1) % images.length);
+            }, 3000);
+            return () => clearInterval(interval);
+        }
+    }, [images.length]);
+
+    const displayImage = images[currentIndex];
 
     return (
         <div className="flex flex-col gap-8">
@@ -68,6 +85,28 @@ export default function ProjectDetailPage({
                 </div>
             </div>
 
+            {/* Project Image Carousel */}
+            {images.length > 0 && !imageError && (
+                <div className="relative w-full aspect-video sm:aspect-[21/9] rounded-2xl overflow-hidden bg-muted border border-border">
+                    <AnimatePresence mode="popLayout">
+                        <motion.img
+                            key={displayImage}
+                            src={displayImage}
+                            alt={project.title}
+                            initial={{ x: "100%", opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            exit={{ x: "-100%", opacity: 0 }}
+                            transition={{
+                                duration: 0.8,
+                                ease: [0.4, 0, 0.2, 1]
+                            }}
+                            className="absolute inset-0 w-full h-full object-cover"
+                            onError={() => setImageError(true)}
+                        />
+                    </AnimatePresence>
+                </div>
+            )}
+
             {/* Links */}
             <div className="flex flex-wrap gap-3">
                 {project.demoUrl && project.demoUrl !== "#" && (
@@ -98,7 +137,7 @@ export default function ProjectDetailPage({
             {project.longDescription && (
                 <section className="flex flex-col gap-3">
                     <h2 className="text-xl font-bold">{t.aboutThisProject}</h2>
-                    <p className="text-muted-foreground leading-relaxed">
+                    <p className="text-muted-foreground leading-relaxed text-justify">
                         {project.longDescription}
                     </p>
                 </section>
