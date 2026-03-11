@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { DATA } from "@/data/resume";
 import BlurFade from "@/components/magicui/blur-fade";
-import { ChevronLeft, Search, X, ExternalLink, FileText, Image as ImageIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, X, ExternalLink, FileText, Image as ImageIcon } from "lucide-react";
 import { useTranslation } from "@/i18n/context";
 import { useState, useMemo, useEffect } from "react";
 
@@ -12,7 +12,8 @@ export default function AchievementsPage() {
     const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCert, setSelectedCert] = useState<{ title: string; image: string; type: string } | null>(null);
-
+    const [certPage, setCertPage] = useState(1);
+    const CERTS_PER_PAGE = 5;
     const BLUR_FADE_DELAY = 0.05;
 
     // Prevent body scroll when modal is open
@@ -26,6 +27,15 @@ export default function AchievementsPage() {
             document.body.style.overflow = 'unset';
         };
     }, [selectedCert]);
+
+    // Reset pagination when search changes
+    useEffect(() => {
+        setCertPage(1);
+    }, [searchQuery]);
+
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [certPage]);
 
     // Filter awards and certifications based on search query
     const filteredAwards = useMemo(() => {
@@ -48,7 +58,14 @@ export default function AchievementsPage() {
         );
     }, [searchQuery]);
 
-    const renderCard = (item: any, index: number) => {
+    const paginatedCertifications = useMemo(() => {
+        const start = (certPage - 1) * CERTS_PER_PAGE;
+        return filteredCertifications.slice(start, start + CERTS_PER_PAGE);
+    }, [filteredCertifications, certPage]);
+
+    const totalCertPages = Math.ceil(filteredCertifications.length / CERTS_PER_PAGE);
+
+    const renderCard = (item: any, index: number, isCarousel = false) => {
         const rawPath = item.image || "";
         const lowerPath = rawPath.toLowerCase();
 
@@ -59,7 +76,8 @@ export default function AchievementsPage() {
         return (
             <BlurFade key={item.title + item.dates} delay={BLUR_FADE_DELAY * (index + 1)}>
                 <div
-                    className="group flex flex-col p-4 bg-muted/10 hover:bg-muted/20 border border-border/50 rounded-2xl transition-all duration-300 h-full cursor-pointer"
+                    className={`group flex flex-col p-4 bg-muted/10 hover:bg-muted/20 border border-border/50 rounded-2xl transition-all duration-300 h-full cursor-pointer ${isCarousel ? "w-[280px] sm:w-full shrink-0" : "w-full"
+                        }`}
                     onClick={() => setSelectedCert({ title: item.title, image: rawPath, type: item.type })}
                 >
                     {/* Certificate/Image Frame */}
@@ -165,7 +183,7 @@ export default function AchievementsPage() {
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                         <input
                             type="text"
-                            placeholder="Search by name or issuer..."
+                            placeholder="Search by name"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full bg-muted/20 border border-border/50 rounded-xl py-3 md:py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
@@ -181,8 +199,9 @@ export default function AchievementsPage() {
                         <h2 className="text-xl md:text-2xl font-bold tracking-tight shrink-0">{t.awards}</h2>
                         <div className="h-px flex-1 bg-border/60" />
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                        {filteredAwards.map((item, index) => renderCard(item, index))}
+                    {/* Mobile: Horizontal Scroll, Desktop: Grid */}
+                    <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 overflow-x-auto md:overflow-x-visible no-scrollbar -mx-4 px-4 md:mx-0 md:px-0 pb-4 md:pb-0 snap-x">
+                        {filteredAwards.map((item, index) => renderCard(item, index, true))}
                     </div>
                 </section>
             )}
@@ -195,8 +214,31 @@ export default function AchievementsPage() {
                         <div className="h-px flex-1 bg-border/60" />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                        {filteredCertifications.map((item, index) => renderCard(item, index))}
+                        {paginatedCertifications.map((item, index) => renderCard(item, index))}
                     </div>
+
+                    {/* Pagination Controls */}
+                    {totalCertPages > 1 && (
+                        <div className="flex items-center justify-center gap-4 mt-8">
+                            <button
+                                onClick={() => setCertPage(prev => (prev === 1 ? totalCertPages : prev - 1))}
+                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-xl hover:bg-muted/50 transition-all duration-300 group"
+                            >
+                                <ChevronLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
+                                {t.previous}
+                            </button>
+                            <span className="text-sm font-medium text-muted-foreground tabular-nums">
+                                {certPage} / {totalCertPages}
+                            </span>
+                            <button
+                                onClick={() => setCertPage(prev => (prev === totalCertPages ? 1 : prev + 1))}
+                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-xl hover:bg-muted/50 transition-all duration-300 group"
+                            >
+                                {t.next}
+                                <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform" />
+                            </button>
+                        </div>
+                    )}
                 </section>
             )}
 
@@ -222,8 +264,8 @@ export default function AchievementsPage() {
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 md:p-12 bg-background/95 backdrop-blur-xl animate-in fade-in duration-300">
                     <div
                         className={`relative flex flex-col bg-card border border-border/50 rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-300 ${selectedCert.image.toLowerCase().endsWith('.pdf')
-                                ? "w-full max-w-5xl h-[85vh] md:h-[90vh]"
-                                : "w-auto max-w-[90vw] h-auto max-h-[85vh] md:max-h-[90vh]"
+                            ? "w-full max-w-5xl h-[85vh] md:h-[90vh]"
+                            : "w-auto max-w-[90vw] h-auto max-h-[85vh] md:max-h-[90vh]"
                             }`}
                     >
                         {/* Header */}

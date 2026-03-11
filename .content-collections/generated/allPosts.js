@@ -41,6 +41,10 @@ export default [
     "author": "John Doe",
     "summary": "Master Git workflows that keep your team productive and your codebase healthy.",
     "image": "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=800&h=192&fit=crop",
+    "topics": [
+      "Git",
+      "Workflow"
+    ],
     "content": "# Git Workflow Guide: From Chaos to Clarity\n\nGit is powerful, but teams usually struggle because they don’t agree on a few basics. A simple workflow keeps history readable, reviews focused, and releases less stressful.\n\nThis is a lightweight guide you can adopt in a day and iterate on later.\n\n## A simple team workflow\n\n- Branch from `main` for every change.\n- Keep branches small and short-lived.\n- Open a pull request early and ask for review.\n- Merge back to `main` once tests pass.\n\n## Commit message tips\n\n- Start with a clear verb (“add”, “fix”, “remove”, “refactor”).\n- Keep the first line short and specific.\n- Prefer multiple small commits over one giant “WIP”.\n\n## PR checklist\n\n1. Explain what changed and why.\n2. Link the issue or describe the user impact.\n3. Add tests (or explain why not).\n4. Keep the diff small enough to review quickly.\n\n## Wrap-up\n\nThe goal isn’t “perfect Git” — it’s fewer surprises and faster collaboration. Start simple, write down the rules, and improve them as your team grows.",
     "_meta": {
       "filePath": "git-workflow-guide.mdx",

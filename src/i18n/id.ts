@@ -8,7 +8,6 @@ export const id: TranslationKeys = {
     language: "Bahasa",
 
     // Hero
-    heroPrefix: "Hai, saya",
 
     // Sections
     about: "Tentang",
@@ -89,6 +88,13 @@ export const id: TranslationKeys = {
     inProgress: "Sedang Berjalan",
     backToProjects: "Kembali ke Proyek",
     backToHome: "Kembali ke Beranda",
+    previous: "Sebelumnya",
+    next: "Selanjutnya",
+    searchPosts: "Cari postingan...",
+    sortBy: "Urutkan berdasarkan",
+    allTopics: "Semua Topik",
+    newestFirst: "Terbaru",
+    oldestFirst: "Terlama",
 
     // 404
     pageNotFound: "Halaman Tidak Ditemukan",

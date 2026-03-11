@@ -6,7 +6,7 @@ export const en = {
     language: "Language",
 
     // Hero
-    heroPrefix: "Hi, I'm",
+
 
     // Sections
     about: "About",
@@ -87,6 +87,13 @@ export const en = {
     inProgress: "In Progress",
     backToProjects: "Back to Projects",
     backToHome: "Back to Home",
+    previous: "Previous",
+    next: "Next",
+    searchPosts: "Search posts...",
+    sortBy: "Sort by",
+    allTopics: "All Topics",
+    newestFirst: "Newest First",
+    oldestFirst: "Oldest First",
 
     // 404
     pageNotFound: "Page Not Found",

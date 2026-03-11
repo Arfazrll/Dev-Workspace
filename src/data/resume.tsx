@@ -81,7 +81,9 @@ const educationItems = p.education.map((e: Education) => {
   return {
     school: e.institution,
     href: "#",
-    degree: `${e.degree} — ${e.major}${e.gpa ? ` (GPA: ${e.gpa})` : ""}`,
+    degree: e.degree,
+    major: e.major,
+    gpa: e.gpa,
     logoUrl: e.logo,
     start: startYear,
     end: endYear,

@@ -2133,8 +2133,8 @@ WAKATIME_API_KEY=your_wakatime_key`
         {
             id: 'edu-1',
             institution: 'Telkom University',
-            degree: 'Bachelor of Technology',
-            major: 'Information Technology',
+            degree: 'Bachelor of Information Technology',
+            major: '',
             startDate: '2023-08-01',
             isOngoing: true,
             gpa: '3.8/4.0',
@@ -2149,8 +2149,8 @@ WAKATIME_API_KEY=your_wakatime_key`
         {
             id: 'edu-2',
             institution: 'SMAN 88 Jakarta',
-            degree: 'High School Diploma',
-            major: 'Science (IPA)',
+            degree: 'High School',
+            major: 'Science Mathematic (89/100)',
             startDate: '2020-06-01',
             endDate: '2023-06-30',
             isOngoing: false,

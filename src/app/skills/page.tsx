@@ -80,9 +80,10 @@ export default function SkillsPage() {
                 </div>
             </section>
 
-            {/* Hard Skills by Category */}
+            {/* Skills Accordion (Mutual Exclusion) */}
             <section className="flex flex-col gap-6">
-                <Accordion type="single" collapsible className="w-full">
+                <Accordion type="single" collapsible className="w-full flex flex-col gap-6">
+                    {/* Hard Skills by Category */}
                     <AccordionItem value="hard-skills" className="border-none">
                         <AccordionTrigger className="hover:no-underline py-0">
                             <h2 className="text-xl font-bold">{t.hardSkills}</h2>
@@ -116,12 +117,8 @@ export default function SkillsPage() {
                             </div>
                         </AccordionContent>
                     </AccordionItem>
-                </Accordion>
-            </section>
 
-            {/* Soft Skills */}
-            <section className="flex flex-col gap-4">
-                <Accordion type="single" collapsible className="w-full">
+                    {/* Soft Skills */}
                     <AccordionItem value="soft-skills" className="border-none">
                         <AccordionTrigger className="hover:no-underline py-0">
                             <h2 className="text-xl font-bold">{t.softSkills}</h2>

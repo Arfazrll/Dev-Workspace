@@ -15,6 +15,7 @@ const posts = defineCollection({
         author: z.string().optional(),
         summary: z.string(),
         image: z.string().optional(),
+        topics: z.array(z.string()).optional(),
         content: z.string(),
     }),
     transform: async (document, context) => {
@@ -22,7 +23,7 @@ const posts = defineCollection({
             remarkPlugins: [remarkGfm, remarkCodeMeta],
         });
         return {
-        ...document,
+            ...document,
             mdx,
         };
     },

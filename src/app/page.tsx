@@ -61,7 +61,7 @@ export default function Page() {
             <div className="gap-2 flex flex-col order-2 md:order-1">
               <BlurFade delay={BLUR_FADE_DELAY} yOffset={8}>
                 <h1 className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl leading-tight">
-                  <span className="block">{t.heroPrefix}</span>
+                  
                   <span>{DATA.name}</span>
                   <BadgeCheck
                     className="inline-block ml-2 size-7 md:size-9 text-[#1DA1F2] -mt-1"
@@ -158,8 +158,27 @@ export default function Page() {
                         {education.school}
                         <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" aria-hidden />
                       </div>
-                      <div className="font-sans text-sm text-muted-foreground">
-                        {education.degree}
+                      <div className="font-sans text-sm text-muted-foreground flex flex-col">
+                        <div className="text-foreground/90 font-medium leading-snug">
+                          {education.school === "SMAN 88 Jakarta" ? (
+                            <span>
+                              {education.degree}{" "}
+                              <span className="font-normal text-muted-foreground">- {education.major}</span>
+                            </span>
+                          ) : (
+                            education.degree
+                          )}
+                        </div>
+                        {education.school !== "SMAN 88 Jakarta" && education.major && (
+                          <span className="leading-snug">
+                            {education.major}
+                          </span>
+                        )}
+                        {education.gpa && (
+                          <span className="text-xs mt-0.5 opacity-80">
+                            GPA: {education.gpa}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>

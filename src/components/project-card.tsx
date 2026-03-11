@@ -20,11 +20,11 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
     <motion.img
       src={src}
       alt={alt}
-      initial={{ x: "100%", opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: "-100%", opacity: 0 }}
+      initial={{ y: "100%", opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: "-100%", opacity: 0 }}
       transition={{
-        duration: 0.8,
+        duration: 1,
         ease: [0.4, 0, 0.2, 1] // Custom cubic-bezier for premium feel
       }}
       className="absolute inset-0 w-full h-48 object-cover"

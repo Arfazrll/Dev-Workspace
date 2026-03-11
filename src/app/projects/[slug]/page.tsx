@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { ChevronLeft, ExternalLink, Github } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink, Github } from "lucide-react";
 import { portfolioData } from "@/data/portfolio";
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "@/i18n/context";
@@ -93,11 +93,11 @@ export default function ProjectDetailPage({
                             key={displayImage}
                             src={displayImage}
                             alt={project.title}
-                            initial={{ x: "100%", opacity: 0 }}
-                            animate={{ x: 0, opacity: 1 }}
-                            exit={{ x: "-100%", opacity: 0 }}
+                            initial={{ y: "100%", opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: "-100%", opacity: 0 }}
                             transition={{
-                                duration: 0.8,
+                                duration: 1,
                                 ease: [0.4, 0, 0.2, 1]
                             }}
                             className="absolute inset-0 w-full h-full object-cover"
@@ -258,6 +258,59 @@ export default function ProjectDetailPage({
                     </div>
                 </section>
             )}
+
+            {/* Next/Prev Navigation */}
+            <section className="pt-12 sm:pt-16 border-t border-border/60 mt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {(() => {
+                        const projectIndex = portfolioData.projects.findIndex(p => slugify(p.title) === slug);
+                        const totalProjects = portfolioData.projects.length;
+
+                        // Circular logic
+                        const prevProject = portfolioData.projects[(projectIndex - 1 + totalProjects) % totalProjects];
+                        const nextProject = portfolioData.projects[(projectIndex + 1) % totalProjects];
+
+                        return (
+                            <>
+                                <div className="min-w-0">
+                                    {prevProject ? (
+                                        <Link
+                                            href={`/projects/${slugify(prevProject.title)}`}
+                                            className="group flex flex-col gap-2 p-5 rounded-2xl border border-border/50 hover:border-primary/30 hover:bg-muted/10 transition-all duration-300 h-full"
+                                            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                                        >
+                                            <div className="flex items-center gap-2 text-muted-foreground text-[10px] font-bold uppercase tracking-widest">
+                                                <ChevronLeft className="size-3 group-hover:-translate-x-1 transition-transform" />
+                                                {t.previous}
+                                            </div>
+                                            <span className="font-bold text-base md:text-lg group-hover:text-primary transition-colors line-clamp-1">
+                                                {prevProject.title}
+                                            </span>
+                                        </Link>
+                                    ) : <div />}
+                                </div>
+                                <div className="min-w-0">
+                                    {nextProject ? (
+                                        <Link
+                                            href={`/projects/${slugify(nextProject.title)}`}
+                                            className="group flex flex-col items-end gap-2 p-5 rounded-2xl border border-border/50 hover:border-primary/30 hover:bg-muted/10 transition-all duration-300 h-full text-right"
+                                            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                                        >
+                                            <div className="flex items-center gap-2 text-muted-foreground text-[10px] font-bold uppercase tracking-widest">
+                                                {t.next}
+                                                <ChevronRight className="size-3 group-hover:translate-x-1 transition-transform" />
+                                            </div>
+                                            <span className="font-bold text-base md:text-lg group-hover:text-primary transition-colors line-clamp-1">
+                                                {nextProject.title}
+                                            </span>
+                                        </Link>
+                                    ) : <div />}
+                                </div>
+                            </>
+                        );
+                    })()}
+                </div>
+            </section>
         </div>
     );
 }
