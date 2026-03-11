@@ -82,7 +82,7 @@ const educationItems = p.education.map((e: Education) => {
     school: e.institution,
     href: "#",
     degree: `${e.degree} — ${e.major}${e.gpa ? ` (GPA: ${e.gpa})` : ""}`,
-    logoUrl: "",
+    logoUrl: e.logo,
     start: startYear,
     end: endYear,
   };
@@ -109,6 +109,7 @@ const projectItems = p.projects.map((proj: Project) => {
     ],
     image: "",
     video: "",
+    images: proj.images || [],
   };
 });
 
@@ -117,10 +118,11 @@ const hackathonItems = p.achievements
   .filter((a: Achievement) => a.category === "award")
   .map((a: Achievement) => ({
     title: a.title,
-    dates: new Date(a.date).toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+    dates: new Date(a.date).getFullYear().toString(),
     location: a.issuer,
     description: a.description || "",
     image: a.image || "",
+    type: "award",
     links: a.credentialUrl
       ? [{ title: "Credential", icon: <Icons.globe className="h-4 w-4" />, href: a.credentialUrl }]
       : [],
@@ -131,10 +133,11 @@ const certItems = p.achievements
   .filter((a: Achievement) => a.category === "certification")
   .map((a: Achievement) => ({
     title: a.title,
-    dates: new Date(a.date).toLocaleDateString("en-US", { month: "long", year: "numeric" }),
+    dates: new Date(a.date).getFullYear().toString(),
     location: a.issuer,
     description: `Certification from ${a.issuer}`,
-    image: "",
+    image: a.image || "",
+    type: "certification",
     links: a.credentialUrl
       ? [{ title: "Verify", icon: <Icons.globe className="h-4 w-4" />, href: a.credentialUrl }]
       : [],

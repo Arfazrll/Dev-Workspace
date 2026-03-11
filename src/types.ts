@@ -64,6 +64,7 @@ export interface Project {
     features: ProjectFeature[];
     installation: ProjectInstallation[];
     challengesAndSolutions: ProjectChallenge[];
+    images?: string[];
 }
 
 export interface Experience {
@@ -93,6 +94,7 @@ export interface Education {
     gpa?: string;
     activities: string[];
     achievements: string[];
+    logo: string;
 }
 
 export interface Achievement {

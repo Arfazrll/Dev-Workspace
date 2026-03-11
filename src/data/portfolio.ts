@@ -147,7 +147,12 @@ WAKATIME_API_KEY=your_wakatime_key`
                     solution: "Developed fallback materials and uniform-based capability detection to ensure the custom GLSL shaders render correctly across inconsistent WebGL implementations on Safari and older Android browsers."
                 }
             ],
-
+            images: [
+                "/project/creativeportfoliowebsite1.png",
+                "/project/creativeportfoliowebsite2.png",
+                "/project/creativeportfoliowebsite3.png",
+                "/project/creativeportfoliowebsite4.png",
+            ],
         },
         {
             id: 'project-2',
@@ -236,7 +241,10 @@ WAKATIME_API_KEY=your_wakatime_key`
                     solution: "Integrated a custom video player and PDF viewer with lazy loading and adaptive streaming to ensure smooth content delivery even on low-bandwidth connections."
                 }
             ],
-
+            images: [
+                "/project/snbtinplatformpersiapansnbt20251.png",
+                "/project/snbtinplatformpersiapansnbt20252.png",
+            ],
         },
         {
             id: 'project-3',
@@ -256,6 +264,10 @@ WAKATIME_API_KEY=your_wakatime_key`
             role: 'Software Engineering',
             highlights: ['Direct-to-Cloud Architecture', 'Real-time Monitoring', 'Go High-Performance API'],
             category: 'IoT & Embedded',
+            images: [
+                "/project/terraflowplatform1.png",
+                "/project/terraflowplatform2.png",
+            ],
             features: [
                 {
                     title: '🤖 Smart Firmware (ESP32)',
@@ -2132,6 +2144,7 @@ WAKATIME_API_KEY=your_wakatime_key`
                 'Active in national data science competitions',
                 'Research Assistant at multiple laboratories',
             ],
+            logo: '/assets/TelkomUniversityLogo.png',
         },
         {
             id: 'edu-2',
@@ -2146,6 +2159,7 @@ WAKATIME_API_KEY=your_wakatime_key`
                 'Strong foundation in mathematics and physics',
                 'Analytical thinking development',
             ],
+            logo: '/assets/sman88logo.png',
         },
     ],
     achievements: [

@@ -3,9 +3,10 @@
 
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ImageOff } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import Markdown from "react-markdown";
 
 function ProjectImage({ src, alt }: { src: string; alt: string }) {
@@ -16,10 +17,17 @@ function ProjectImage({ src, alt }: { src: string; alt: string }) {
   }
 
   return (
-    <img
+    <motion.img
       src={src}
       alt={alt}
-      className="w-full h-48 object-cover"
+      initial={{ x: "100%", opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ x: "-100%", opacity: 0 }}
+      transition={{
+        duration: 0.8,
+        ease: [0.4, 0, 0.2, 1] // Custom cubic-bezier for premium feel
+      }}
+      className="absolute inset-0 w-full h-48 object-cover"
       onError={() => setImageError(true)}
     />
   );
@@ -34,6 +42,7 @@ interface Props {
   link?: string;
   image?: string;
   video?: string;
+  images?: readonly string[];
   links?: readonly {
     icon: React.ReactNode;
     type: string;
@@ -51,9 +60,23 @@ export function ProjectCard({
   link,
   image,
   video,
+  images,
   links,
   className,
 }: Props) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (images && images.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [images]);
+
+  const displayImage = images && images.length > 0 ? images[currentIndex] : image;
+
   return (
     <div
       className={cn(
@@ -77,10 +100,22 @@ export function ProjectCard({
               playsInline
               className="w-full h-48 object-cover"
             />
-          ) : image ? (
-            <ProjectImage src={image} alt={title} />
+          ) : displayImage ? (
+            <div className="relative w-full h-48 overflow-hidden bg-muted">
+              <AnimatePresence mode="popLayout">
+                <ProjectImage src={displayImage} alt={title} key={displayImage} />
+              </AnimatePresence>
+            </div>
           ) : (
-            <div className="w-full h-48 bg-muted" />
+            <div className="w-full h-48 flex flex-col items-center justify-center gap-2 border-b border-border/10 bg-linear-to-br from-muted/5 to-muted/30 relative overflow-hidden group/no-preview transition-colors duration-500">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.05)_100%)]" />
+              <div className="p-3 rounded-2xl bg-background/30 backdrop-blur-xs ring-1 ring-border/50 group-hover/no-preview:scale-110 transition-transform duration-500">
+                <ImageOff className="size-6 text-muted-foreground/40" />
+              </div>
+              <span className="text-[10px] font-bold text-muted-foreground/30 uppercase tracking-[0.3em] mt-2 ml-1">
+                No Preview Available
+              </span>
+            </div>
           )}
         </Link>
         {links && links.length > 0 && (

@@ -3,10 +3,11 @@
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { DATA } from "@/data/resume";
-import { Timeline, TimelineItem, TimelineConnectItem } from "@/components/timeline";
+import BlurFade from "@/components/magicui/blur-fade";
 import { ChevronRight } from "lucide-react";
 import { useTranslation } from "@/i18n/context";
 
+const BLUR_FADE_DELAY = 0.04;
 const DEFAULT_VISIBLE = 5;
 
 export default function HackathonsSection() {
@@ -31,58 +32,46 @@ export default function HackathonsSection() {
             </p>
           </div>
         </div>
-        <Timeline>
-          {visibleItems.map((hackathon) => (
-            <TimelineItem key={hackathon.title + hackathon.dates} className="w-full flex items-start justify-between gap-10">
-              <TimelineConnectItem className="flex items-start justify-center">
-                {hackathon.image ? (
-                  <img
-                    src={hackathon.image}
-                    alt={hackathon.title}
-                    className="size-10 bg-card z-10 shrink-0 overflow-hidden p-1 border rounded-full shadow ring-2 ring-border object-contain flex-none"
-                  />
-                ) : (
-                  <div className="size-10 bg-card z-10 shrink-0 overflow-hidden p-1 border rounded-full shadow ring-2 ring-border flex-none" />
-                )}
-              </TimelineConnectItem>
-              <div className="flex flex-1 flex-col justify-start gap-2 min-w-0">
-                {hackathon.dates && (
-                  <time className="text-xs text-muted-foreground">{hackathon.dates}</time>
-                )}
-                {hackathon.title && (
-                  <h3 className="font-semibold leading-none">{hackathon.title}</h3>
-                )}
-                {hackathon.location && (
-                  <p className="text-sm text-muted-foreground">{hackathon.location}</p>
-                )}
-                {hackathon.description && (
-                  <p className="text-sm text-muted-foreground leading-relaxed wrap-break-word">
-                    {hackathon.description}
-                  </p>
-                )}
-                {hackathon.links && hackathon.links.length > 0 && (
-                  <div className="mt-1 flex flex-row flex-wrap items-start gap-2">
-                    {hackathon.links.map((link, idx) => (
-                      <Link
-                        href={link.href}
-                        key={idx}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Badge className="flex items-center gap-1.5 text-xs bg-primary text-primary-foreground">
-                          {link.icon}
-                          {link.title}
-                        </Badge>
-                      </Link>
-                    ))}
+        <div className="grid grid-cols-1 gap-3">
+          {visibleItems.map((hackathon, index) => (
+            <BlurFade
+              key={hackathon.title + hackathon.dates}
+              delay={BLUR_FADE_DELAY * (index + 1)}
+            >
+              <div className="group relative flex flex-col justify-center px-5 py-4 bg-muted/20 hover:bg-muted/30 border border-border/50 rounded-2xl transition-all duration-300">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex flex-col gap-1 min-w-0">
+                    <h3 className="font-bold text-base md:text-lg tracking-tight truncate">
+                      {hackathon.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <span className="font-medium">{hackathon.location}</span>
+                      <span className="size-1 rounded-full bg-muted-foreground/30" />
+                      <time className="tabular-nums">{hackathon.dates}</time>
+                    </div>
                   </div>
-                )}
+                  {hackathon.links && hackathon.links.length > 0 && (
+                    <div className="flex gap-2">
+                      {hackathon.links.map((link, idx) => (
+                        <Link
+                          key={idx}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-primary transition-colors"
+                        >
+                          <ChevronRight className="size-5" />
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-            </TimelineItem>
+            </BlurFade>
           ))}
-        </Timeline>
+        </div>
         {DATA.hackathons.length > DEFAULT_VISIBLE && (
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-4">
             <Link
               href="/achievements"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-4 py-2 w-fit flex items-center gap-1.5 group"

@@ -42,6 +42,7 @@ export default function ProjectsPage() {
                             tags={project.technologies}
                             image={project.image}
                             video={project.video}
+                            images={project.images}
                             links={project.links}
                         />
                     </BlurFade>

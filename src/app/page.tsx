@@ -11,8 +11,9 @@ import ContactSection from "@/components/section/contact-section";
 import HackathonsSection from "@/components/section/hackathons-section";
 import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
-import { ArrowUpRight, BadgeCheck } from "lucide-react";
+import { ArrowUpRight, BadgeCheck, Briefcase, MapPin } from "lucide-react";
 import { useTranslation } from "@/i18n/context";
+import { RealTimeClock } from "@/components/real-time-clock";
 
 const BLUR_FADE_DELAY = 0.04;
 
@@ -22,10 +23,10 @@ const homepageTechStackAI = [
   { name: 'TensorFlow', icon: 'https://cdn.simpleicons.org/tensorflow' },
   { name: 'Pandas', icon: 'https://cdn.simpleicons.org/pandas' },
   { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi' },
+  { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript' },
 ];
 
 const homepageTechStackSoftware = [
-  { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript' },
   { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript' },
   { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/white' },
   { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql' },
@@ -65,6 +66,23 @@ export default function Page() {
                 delay={BLUR_FADE_DELAY}
                 text={DATA.description}
               />
+              <BlurFade delay={BLUR_FADE_DELAY * 2}>
+                <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs md:text-sm text-muted-foreground pt-3">
+                  <div className="flex items-center gap-1.5">
+                    <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>Available for opportunity</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <MapPin className="size-3.5" />
+                    <span>Jakarta, Indonesia</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 border-l pl-4 border-border ml-1">
+                    <span className="font-mono pt-0.5">
+                      <RealTimeClock />
+                    </span>
+                  </div>
+                </div>
+              </BlurFade>
             </div>
             <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
               <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
