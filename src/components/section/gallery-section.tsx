@@ -51,7 +51,7 @@ export default function GallerySection() {
     }, []);
 
     return (
-        <section id="gallery" className="w-full h-full py-12">
+        <section id="gallery" className="w-full h-full py-4">
             <div className="flex flex-col gap-6 w-full relative max-w-5xl mx-auto px-2">
                 <div className="flex items-end justify-between px-2">
                     <div className="flex flex-col gap-1">
@@ -64,7 +64,7 @@ export default function GallerySection() {
                         className="group flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors duration-300"
                     >
                         <span className="relative overflow-hidden pt-1">
-                            {t.viewAll}
+                            {t.viewAllGallery}
                             <span className="absolute bottom-0 left-0 w-full h-px bg-primary transform translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-300" />
                         </span>
                         <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />

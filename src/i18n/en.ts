@@ -16,8 +16,8 @@ export const en = {
     projects: "Projects",
     achievements: "Achievements",
     gallery: "Gallery",
-    viewAll: "View All",
     contact: "Contact",
+    blog: "Blog",
 
     // Skills categories
     techStack: "Tech Stack",
@@ -30,6 +30,8 @@ export const en = {
     viewAllExperience: "View All Experience",
     viewAllProjects: "View All Projects",
     viewAllAchievements: "View All Achievements",
+    viewAllBlogs: "View All Blogs",
+    viewAllGallery: "View All Gallery",
 
     // Projects section
     myProjects: "My Projects",

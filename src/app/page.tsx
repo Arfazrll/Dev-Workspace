@@ -12,6 +12,7 @@ import HackathonsSection from "@/components/section/hackathons-section";
 import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
 import GallerySection from "@/components/section/gallery-section";
+import BlogSection from "@/components/section/blog-section";
 import { ArrowUpRight, BadgeCheck, Briefcase, MapPin } from "lucide-react";
 import { useTranslation } from "@/i18n/context";
 import { RealTimeClock } from "@/components/real-time-clock";
@@ -53,7 +54,7 @@ const levelColors: Record<string, string> = {
 export default function Page() {
   const { t } = useTranslation();
   return (
-    <main className="min-h-dvh flex flex-col gap-14 relative">
+    <main className="min-h-dvh flex flex-col gap-10 relative">
       <section id="hero">
         <div className="mx-auto w-full max-w-2xl space-y-8">
           <div className="gap-2 gap-y-6 flex flex-col md:flex-row justify-between">
@@ -267,6 +268,11 @@ export default function Page() {
       <section id="gallery">
         <BlurFade delay={BLUR_FADE_DELAY * 14.5}>
           <GallerySection />
+        </BlurFade>
+      </section>
+      <section id="blog">
+        <BlurFade delay={BLUR_FADE_DELAY * 15.5}>
+          <BlogSection />
         </BlurFade>
       </section>
       <section id="contact">

@@ -18,8 +18,8 @@ export const id: TranslationKeys = {
     projects: "Proyek",
     achievements: "Pencapaian",
     gallery: "Galeri",
-    viewAll: "Lihat Semua",
     contact: "Kontak",
+    blog: "Blog",
 
     // Skills categories
     techStack: "Tech Stack",
@@ -32,6 +32,8 @@ export const id: TranslationKeys = {
     viewAllExperience: "Lihat Semua Pengalaman",
     viewAllProjects: "Lihat Semua Proyek",
     viewAllAchievements: "Lihat Semua Pencapaian",
+    viewAllBlogs: "Lihat Semua Blog",
+    viewAllGallery: "Lihat Semua Galeri",
 
     // Projects section
     myProjects: "Proyek Saya",
