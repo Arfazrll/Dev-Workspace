@@ -207,26 +207,26 @@ export default function BlogList() {
                     {/* Pagination Controls */}
                     {pagination.totalPages > 1 && (
                         <BlurFade delay={BLUR_FADE_DELAY * 4}>
-                            <div className="flex gap-3 flex-row items-center justify-between mt-12">
-                                <div className="text-sm text-muted-foreground">
+                            <div className="flex items-center justify-between mt-12 w-full">
+                                <span className="text-sm font-medium text-muted-foreground tabular-nums opacity-60">
                                     Page {pagination.page} of {pagination.totalPages}
-                                </div>
-                                <div className="flex gap-2 sm:justify-end">
+                                </span>
+                                <div className="flex items-center gap-3">
                                     <button
                                         disabled={!pagination.hasPreviousPage}
                                         onClick={() => router.push(`/blog?page=${pagination.page - 1}`)}
-                                        className={`h-8 w-fit px-3 flex items-center justify-center text-sm border border-border rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${!pagination.hasPreviousPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-accent/50 group whitespace-nowrap'}`}
+                                        className={`flex items-center gap-2 px-5 py-2 text-sm font-bold bg-muted/20 hover:bg-muted/40 border border-border/50 rounded-xl text-muted-foreground hover:text-foreground transition-all duration-300 group ${!pagination.hasPreviousPage ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     >
-                                        <ChevronLeft className="size-3.5 mr-1 group-hover:-translate-x-0.5 transition-transform" />
+                                        <ChevronLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
                                         {t.previous}
                                     </button>
                                     <button
                                         disabled={!pagination.hasNextPage}
                                         onClick={() => router.push(`/blog?page=${pagination.page + 1}`)}
-                                        className={`h-8 w-fit px-3 flex items-center justify-center text-sm border border-border rounded-lg transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${!pagination.hasNextPage ? 'opacity-50 cursor-not-allowed' : 'hover:bg-accent/50 group whitespace-nowrap'}`}
+                                        className={`flex items-center gap-2 px-5 py-2 text-sm font-black bg-muted/20 hover:bg-muted/40 border border-border/80 rounded-xl text-foreground transition-all duration-300 group ${!pagination.hasNextPage ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     >
                                         {t.next}
-                                        <ChevronRight className="size-3.5 ml-1 group-hover:translate-x-0.5 transition-transform" />
+                                        <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform" />
                                     </button>
                                 </div>
                             </div>

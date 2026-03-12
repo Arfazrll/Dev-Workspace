@@ -34,9 +34,9 @@ export default function GallerySection() {
         const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
         const singleSetWidth = scrollWidth / 3;
 
-        if (scrollLeft < singleSetWidth * 0.5) {
+        if (scrollLeft <= 0) {
             scrollRef.current.scrollLeft = scrollLeft + singleSetWidth;
-        } else if (scrollLeft > singleSetWidth * 2.5 - clientWidth) {
+        } else if (scrollLeft >= singleSetWidth * 2) {
             scrollRef.current.scrollLeft = scrollLeft - singleSetWidth;
         }
     };
@@ -146,19 +146,19 @@ export default function GallerySection() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-background/98 backdrop-blur-2xl"
+                        className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 bg-background/40 backdrop-blur-xl"
                         onClick={() => setSelectedImageIndex(null)}
                     >
                         <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4 md:px-12 pointer-events-none z-50">
                             <button
                                 onClick={(e) => { e.stopPropagation(); navigate("prev"); }}
-                                className="p-4 md:p-6 rounded-3xl bg-zinc-900/90 backdrop-blur-xl border border-white/10 text-white hover:bg-zinc-800 transition-all pointer-events-auto group/nav shadow-2xl active:scale-95"
+                                className="p-4 md:p-6 rounded-3xl bg-background/90 backdrop-blur-xl border border-border text-foreground hover:bg-muted transition-all pointer-events-auto group/nav shadow-2xl active:scale-95"
                             >
                                 <ChevronLeft className="size-6 md:size-8 group-hover/nav:-translate-x-1 transition-transform" />
                             </button>
                             <button
                                 onClick={(e) => { e.stopPropagation(); navigate("next"); }}
-                                className="p-4 md:p-6 rounded-3xl bg-zinc-900/90 backdrop-blur-xl border border-white/10 text-white hover:bg-zinc-800 transition-all pointer-events-auto group/nav shadow-2xl active:scale-95"
+                                className="p-4 md:p-6 rounded-3xl bg-background/90 backdrop-blur-xl border border-border text-foreground hover:bg-muted transition-all pointer-events-auto group/nav shadow-2xl active:scale-95"
                             >
                                 <ChevronRight className="size-6 md:size-8 group-hover/nav:translate-x-1 transition-transform" />
                             </button>
@@ -166,7 +166,7 @@ export default function GallerySection() {
 
                         <button
                             onClick={() => setSelectedImageIndex(null)}
-                            className="absolute top-8 right-8 z-[110] p-4 bg-zinc-900/90 backdrop-blur-xl border border-white/10 rounded-3xl text-white hover:bg-zinc-800 hover:rotate-90 transition-all duration-500 shadow-2xl active:scale-90"
+                            className="absolute top-8 right-8 z-[110] p-4 bg-background/90 backdrop-blur-xl border border-border rounded-3xl text-foreground hover:bg-muted hover:rotate-90 transition-all duration-500 shadow-2xl active:scale-90"
                         >
                             <X className="size-6" />
                         </button>
@@ -177,10 +177,10 @@ export default function GallerySection() {
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: -30 }}
                             transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-                            className="relative flex flex-col bg-card/50 border border-border/50 rounded-none shadow-[0_32px_128px_-32px_rgba(0,0,0,0.5)] overflow-hidden max-w-6xl w-full max-h-[85vh]"
+                            className="relative flex flex-col bg-transparent border border-border/50 rounded-[2rem] shadow-[0_32px_128px_-32px_rgba(0,0,0,0.5)] overflow-hidden max-w-6xl w-full max-h-[85vh]"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="relative flex-1 overflow-hidden bg-black/60 group/modal">
+                            <div className="relative flex-1 overflow-hidden bg-transparent group/modal">
                                 <motion.img
                                     src={items[selectedImageIndex].url}
                                     alt={items[selectedImageIndex].title}
@@ -188,12 +188,6 @@ export default function GallerySection() {
                                 />
 
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/98 via-black/10 to-transparent flex flex-col justify-end p-8 md:p-16 pointer-events-none">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <span className="flex items-center gap-2 text-xs md:text-sm font-bold text-white/60 uppercase tracking-widest">
-                                            <Calendar className="size-4" />
-                                            {new Date(items[selectedImageIndex].date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
-                                        </span>
-                                    </div>
                                     <h2 className="text-3xl md:text-6xl font-[900] text-white tracking-tighter mb-4 drop-shadow-2xl leading-[0.9]">
                                         {items[selectedImageIndex].title}
                                     </h2>

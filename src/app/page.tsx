@@ -13,7 +13,7 @@ import ProjectsSection from "@/components/section/projects-section";
 import WorkSection from "@/components/section/work-section";
 import GallerySection from "@/components/section/gallery-section";
 import BlogSection from "@/components/section/blog-section";
-import { ArrowUpRight, BadgeCheck, Briefcase, MapPin } from "lucide-react";
+import { ArrowUpRight, BadgeCheck, Briefcase, MapPin, ChevronDown } from "lucide-react";
 import { useTranslation } from "@/i18n/context";
 import { RealTimeClock } from "@/components/real-time-clock";
 
@@ -61,7 +61,7 @@ export default function Page() {
             <div className="gap-2 flex flex-col order-2 md:order-1">
               <BlurFade delay={BLUR_FADE_DELAY} yOffset={8}>
                 <h1 className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl leading-tight">
-                  
+
                   <span>{DATA.name}</span>
                   <BadgeCheck
                     className="inline-block ml-2 size-7 md:size-9 text-[#1DA1F2] -mt-1"
@@ -94,10 +94,20 @@ export default function Page() {
               </BlurFade>
             </div>
             <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
-              <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
-                <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
-                <AvatarFallback>{DATA.initials}</AvatarFallback>
-              </Avatar>
+              <div className="relative inline-block w-fit group/avatar">
+                <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
+                  <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
+                  <AvatarFallback>{DATA.initials}</AvatarFallback>
+                </Avatar>
+                <Link
+                  href="/contact"
+                  className="absolute bottom-0 right-0 md:bottom-1 md:right-1 bg-background border border-border rounded-full p-1.5 shadow-sm hover:shadow-md hover:bg-accent transition-all duration-300 flex items-center justify-center group-hover/avatar:ring-4 ring-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring z-10"
+                  aria-label="View Contact Information"
+                  title="Contact / Profiles"
+                >
+                  <ChevronDown className="size-4 md:size-5 text-muted-foreground group-hover/avatar:text-foreground transition-colors" />
+                </Link>
+              </div>
             </BlurFade>
           </div>
         </div>

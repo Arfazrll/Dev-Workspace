@@ -116,24 +116,28 @@ export default function ProjectsPage() {
 
                     {/* Pagination */}
                     {totalPages > 1 && (
-                        <div className="flex items-center justify-center gap-4 mt-8">
-                            <button
-                                onClick={() => setCurrentPage((prev) => (prev === 1 ? totalPages : prev - 1))}
-                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-xl hover:bg-muted/50 transition-colors group"
-                            >
-                                <ChevronLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                                {t.previous}
-                            </button>
-                            <span className="text-sm font-medium text-muted-foreground tabular-nums">
-                                {currentPage} / {totalPages}
+                        <div className="flex items-center justify-between mt-12 w-full max-w-[900px] mx-auto">
+                            <span className="text-sm font-medium text-muted-foreground tabular-nums opacity-60">
+                                Page {currentPage} of {totalPages}
                             </span>
-                            <button
-                                onClick={() => setCurrentPage((prev) => (prev === totalPages ? 1 : prev + 1))}
-                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-xl hover:bg-muted/50 transition-colors group"
-                            >
-                                {t.next}
-                                <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform" />
-                            </button>
+                            <div className="flex items-center gap-3">
+                                <button
+                                    onClick={() => setCurrentPage((prev) => (prev === 1 ? totalPages : prev - 1))}
+                                    className="flex items-center gap-2 px-5 py-2 text-sm font-bold bg-muted/20 hover:bg-muted/40 border border-border/50 rounded-xl text-muted-foreground hover:text-foreground transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
+                                    disabled={currentPage === 1 && totalPages <= 1}
+                                >
+                                    <ChevronLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
+                                    {t.previous}
+                                </button>
+                                <button
+                                    onClick={() => setCurrentPage((prev) => (prev === totalPages ? 1 : prev + 1))}
+                                    className="flex items-center gap-2 px-5 py-2 text-sm font-black bg-muted/20 hover:bg-muted/40 border border-border/80 rounded-xl text-foreground transition-all duration-300 group disabled:opacity-50 disabled:cursor-not-allowed"
+                                    disabled={currentPage === totalPages && totalPages <= 1}
+                                >
+                                    {t.next}
+                                    <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform" />
+                                </button>
+                            </div>
                         </div>
                     )}
                 </>

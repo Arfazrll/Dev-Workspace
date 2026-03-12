@@ -219,24 +219,26 @@ export default function AchievementsPage() {
 
                     {/* Pagination Controls */}
                     {totalCertPages > 1 && (
-                        <div className="flex items-center justify-center gap-4 mt-8">
-                            <button
-                                onClick={() => setCertPage(prev => (prev === 1 ? totalCertPages : prev - 1))}
-                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-xl hover:bg-muted/50 transition-all duration-300 group"
-                            >
-                                <ChevronLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                                {t.previous}
-                            </button>
-                            <span className="text-sm font-medium text-muted-foreground tabular-nums">
-                                {certPage} / {totalCertPages}
+                        <div className="flex items-center justify-between mt-12 w-full">
+                            <span className="text-sm font-medium text-muted-foreground tabular-nums opacity-60">
+                                Page {certPage} of {totalCertPages}
                             </span>
-                            <button
-                                onClick={() => setCertPage(prev => (prev === totalCertPages ? 1 : prev + 1))}
-                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium border border-border rounded-xl hover:bg-muted/50 transition-all duration-300 group"
-                            >
-                                {t.next}
-                                <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform" />
-                            </button>
+                            <div className="flex items-center gap-3">
+                                <button
+                                    onClick={() => setCertPage(prev => (prev === 1 ? totalCertPages : prev - 1))}
+                                    className="flex items-center gap-2 px-5 py-2 text-sm font-bold bg-muted/20 hover:bg-muted/40 border border-border/50 rounded-xl text-muted-foreground hover:text-foreground transition-all duration-300 group"
+                                >
+                                    <ChevronLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
+                                    {t.previous}
+                                </button>
+                                <button
+                                    onClick={() => setCertPage(prev => (prev === totalCertPages ? 1 : prev + 1))}
+                                    className="flex items-center gap-2 px-5 py-2 text-sm font-black bg-muted/20 hover:bg-muted/40 border border-border/80 rounded-xl text-foreground transition-all duration-300 group"
+                                >
+                                    {t.next}
+                                    <ChevronRight className="size-4 group-hover:translate-x-1 transition-transform" />
+                                </button>
+                            </div>
                         </div>
                     )}
                 </section>

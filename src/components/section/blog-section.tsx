@@ -64,15 +64,9 @@ export default function BlogSection() {
                                             </h3>
                                             <ChevronRight className="size-4 text-muted-foreground opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                                         </div>
-                                        <div className="flex items-center gap-3">
-                                            <time className="text-xs text-muted-foreground font-medium">
-                                                {post.publishedAt}
-                                            </time>
-                                            <div className="size-1 rounded-full bg-border" />
-                                            <span className="text-xs text-muted-foreground font-medium">
-                                                {Math.ceil(post.content.length / 500)} min read
-                                            </span>
-                                        </div>
+                                        <time className="text-xs text-muted-foreground font-medium">
+                                            {post.publishedAt}
+                                        </time>
                                     </div>
                                 </Link>
                             </motion.div>
