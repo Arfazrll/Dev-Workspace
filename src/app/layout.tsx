@@ -55,6 +55,18 @@ export const metadata: Metadata = {
     google: "",
     yandex: "",
   },
+  icons: {
+    icon: [
+      {
+        url: "/Arfazrll_light.svg",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/Arfazrll_dark.svg",
+        media: "(prefers-color-scheme: dark)",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
