@@ -38,7 +38,7 @@ export default function ContactSection() {
           </Link>{" "}
           {t.contactOr}{" "}
           <Link
-            href={`mailto:${DATA.contact.email}`}
+            href={`mailto:${DATA.contact.email}?subject=${encodeURIComponent("Inquiry regarding your Portfolio / Collaboration Opportunity")}&body=${encodeURIComponent("Dear Syahril Arfian Almazril,\n\nI recently viewed your portfolio and I am very impressed with your background in AI and Software Engineering.\n\nI would love to discuss a potential opportunity or collaboration with you regarding [insert topic here].\n\nLooking forward to hearing from you.\n\nBest regards,\n[Your Name]\n[Your Company/Organization]")}`}
             className="text-blue-500 hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
           >
             {t.contactEmail}
