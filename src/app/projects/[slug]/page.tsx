@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, ExternalLink, Github } from "lucide-react";
-import { portfolioData } from "@/data/portfolio";
+import { DATA } from "@/data/resume";
 import { Badge } from "@/components/ui/badge";
 import { useTranslation } from "@/i18n/context";
 import { notFound } from "next/navigation";
@@ -18,8 +18,9 @@ export default function ProjectDetailPage({
     params: Promise<{ slug: string }>;
 }) {
     const { slug } = use(params);
-    const { t } = useTranslation();
-    const project = portfolioData.projects.find((p) => slugify(p.title) === slug);
+    const { t, lang } = useTranslation();
+    const data = DATA[lang as keyof typeof DATA] || DATA.en;
+    const project = data.projects.find((p: any) => p.slug === slug);
 
     if (!project) {
         notFound();
@@ -28,7 +29,7 @@ export default function ProjectDetailPage({
     const startDate = new Date(project.startDate);
     const dateStr =
         project.customTimeline ||
-        startDate.toLocaleDateString("en-US", { month: "long", year: "numeric" });
+        startDate.toLocaleDateString(lang === "en" ? "en-US" : "id-ID", { month: "long", year: "numeric" });
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [imageError, setImageError] = useState(false);
@@ -80,8 +81,8 @@ export default function ProjectDetailPage({
                 <p className="text-muted-foreground text-lg">{project.description}</p>
                 <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
                     <span>{dateStr}</span>
-                    {project.team && <span>• Team: {project.team}</span>}
-                    {project.role && <span>• Role: {project.role}</span>}
+                    {project.team && <span>• {t.team}: {project.team}</span>}
+                    {project.role && <span>• {t.role}: {project.role}</span>}
                 </div>
             </div>
 
@@ -147,7 +148,7 @@ export default function ProjectDetailPage({
             <section className="flex flex-col gap-3">
                 <h2 className="text-xl font-bold">{t.techStack}</h2>
                 <div className="flex flex-wrap gap-2">
-                    {project.techStack.map((tech) => (
+                    {project.techStack?.map((tech: any) => (
                         <Badge key={tech} variant="secondary" className="text-xs">
                             {tech}
                         </Badge>
@@ -160,7 +161,7 @@ export default function ProjectDetailPage({
                 <section className="flex flex-col gap-3">
                     <h2 className="text-xl font-bold">{t.toolsUsed}</h2>
                     <div className="flex flex-wrap gap-2">
-                        {project.tools.map((tool) => (
+                        {project.tools?.map((tool: any) => (
                             <Badge key={tool} variant="outline" className="text-xs">
                                 {tool}
                             </Badge>
@@ -263,19 +264,19 @@ export default function ProjectDetailPage({
             <section className="pt-12 sm:pt-16 border-t border-border/60 mt-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {(() => {
-                        const projectIndex = portfolioData.projects.findIndex(p => slugify(p.title) === slug);
-                        const totalProjects = portfolioData.projects.length;
+                        const projectIndex = data.projects.findIndex((p: any) => p.slug === slug);
+                        const totalProjects = data.projects.length;
 
                         // Circular logic
-                        const prevProject = portfolioData.projects[(projectIndex - 1 + totalProjects) % totalProjects];
-                        const nextProject = portfolioData.projects[(projectIndex + 1) % totalProjects];
+                        const prevProject = data.projects[(projectIndex - 1 + totalProjects) % totalProjects];
+                        const nextProject = data.projects[(projectIndex + 1) % totalProjects];
 
                         return (
                             <>
                                 <div className="min-w-0">
                                     {prevProject ? (
                                         <Link
-                                            href={`/projects/${slugify(prevProject.title)}`}
+                                            href={`/projects/${prevProject.slug}`}
                                             className="group flex flex-col gap-2 p-5 rounded-2xl border border-border/50 hover:border-primary/30 hover:bg-muted/10 transition-all duration-300 h-full"
                                             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                                         >
@@ -292,7 +293,7 @@ export default function ProjectDetailPage({
                                 <div className="min-w-0">
                                     {nextProject ? (
                                         <Link
-                                            href={`/projects/${slugify(nextProject.title)}`}
+                                            href={`/projects/${nextProject.slug}`}
                                             className="group flex flex-col items-end gap-2 p-5 rounded-2xl border border-border/50 hover:border-primary/30 hover:bg-muted/10 transition-all duration-300 h-full text-right"
                                             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                                         >

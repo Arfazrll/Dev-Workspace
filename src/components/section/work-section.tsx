@@ -35,8 +35,9 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
 }
 
 export default function WorkSection() {
-  const { t } = useTranslation();
-  const visibleWork = DATA.work.slice(0, DEFAULT_VISIBLE);
+  const { t, lang } = useTranslation();
+  const data = DATA[lang as keyof typeof DATA] || DATA.en;
+  const visibleWork = data.work.slice(0, DEFAULT_VISIBLE);
 
   return (
     <div className="flex flex-col gap-6">
@@ -79,7 +80,7 @@ export default function WorkSection() {
                 </div>
                 <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground sm:text-right flex-none ml-11 sm:ml-0">
                   <span>
-                    {work.start} - {work.end ?? "Present"}
+                    {work.start} - {work.end ?? t.present}
                   </span>
                 </div>
               </div>
@@ -90,7 +91,7 @@ export default function WorkSection() {
           </AccordionItem>
         ))}
       </Accordion>
-      {DATA.work.length > DEFAULT_VISIBLE && (
+      {data.work.length > DEFAULT_VISIBLE && (
         <Link
           href="/experience"
           className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-4 py-2 w-fit mx-auto flex items-center gap-1.5 group"

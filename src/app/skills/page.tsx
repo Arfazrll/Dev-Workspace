@@ -2,27 +2,29 @@
 import Link from "next/link";
 import { ChevronLeft, ChevronDown } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { portfolioData } from "@/data/portfolio";
+import { DATA } from "@/data/resume";
+import { TranslationKeys } from "@/i18n/en";
 import { useTranslation } from "@/i18n/context";
 
 export default function SkillsPage() {
-    const { t } = useTranslation();
-    const { techStack, hardSkills, softSkills, tools } = portfolioData;
+    const { t, lang } = useTranslation();
+    const data = (DATA as any)[lang] || DATA.en;
+    const { techStack, hardSkills, softSkills, tools } = data;
 
     // Group hard skills by category
-    const hardSkillsByCategory: Record<string, typeof hardSkills> = {};
-    hardSkills.forEach((skill) => {
+    const hardSkillsByCategory: Record<string, any[]> = {};
+    hardSkills.forEach((skill: any) => {
         const cat = skill.category;
         if (!hardSkillsByCategory[cat]) hardSkillsByCategory[cat] = [];
         hardSkillsByCategory[cat].push(skill);
     });
 
-    const categoryLabels: Record<string, string> = {
-        ai: "AI & Machine Learning",
-        software: "Software Engineering",
-        data: "Data & Analytics",
-        devops: "DevOps & Infrastructure",
-        other: "Other Technical Skills",
+    const categoryLabels: Record<string, keyof TranslationKeys> = {
+        ai: "aiMachineLearning",
+        software: "softwareEngineering",
+        data: "dataAnalytics",
+        devops: "devopsInfrastructure",
+        other: "otherTechnicalSkills",
     };
 
     const levelColors: Record<string, string> = {
@@ -52,7 +54,7 @@ export default function SkillsPage() {
             <section className="flex flex-col gap-4">
                 <h2 className="text-xl font-bold">{t.techStack}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                    {techStack.map((tech) => (
+                    {techStack.map((tech: any) => (
                         <div
                             key={tech.name}
                             className="border bg-background border-border rounded-xl p-3 flex items-center gap-3 hover:ring-2 hover:ring-border/50 transition-all"
@@ -68,7 +70,7 @@ export default function SkillsPage() {
             <section className="flex flex-col gap-4">
                 <h2 className="text-xl font-bold">{t.tools}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                    {tools.map((tool) => (
+                    {tools.map((tool: any) => (
                         <div
                             key={tool.name}
                             className="border bg-background border-border rounded-xl p-3 flex items-center gap-3 hover:ring-2 hover:ring-border/50 transition-all"
@@ -94,10 +96,10 @@ export default function SkillsPage() {
                                 {Object.entries(hardSkillsByCategory).map(([category, skills]) => (
                                     <div key={category} className="flex flex-col gap-3">
                                         <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                                            {categoryLabels[category] || category}
+                                            {t[categoryLabels[category] as keyof TranslationKeys] as any}
                                         </h3>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                            {skills.map((skill) => (
+                                            {skills.map((skill: any) => (
                                                 <div
                                                     key={skill.name}
                                                     className="border bg-background border-border rounded-xl p-4 flex flex-col gap-2"
@@ -126,7 +128,7 @@ export default function SkillsPage() {
                         </AccordionTrigger>
                         <AccordionContent className="pt-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                {softSkills.map((skill) => (
+                                {softSkills.map((skill: any) => (
                                     <div
                                         key={skill.name}
                                         className="border bg-background border-border rounded-xl p-4 flex flex-col gap-1"

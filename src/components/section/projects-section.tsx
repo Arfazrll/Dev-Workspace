@@ -10,8 +10,9 @@ const BLUR_FADE_DELAY = 0.04;
 const DEFAULT_VISIBLE = 4;
 
 export default function ProjectsSection() {
-    const { t } = useTranslation();
-    const visibleProjects = DATA.projects.slice(0, DEFAULT_VISIBLE);
+    const { t, lang } = useTranslation();
+    const data = DATA[lang as keyof typeof DATA] || DATA.en;
+    const visibleProjects = data.projects.slice(0, DEFAULT_VISIBLE);
 
     return (
         <section id="projects">
@@ -48,7 +49,7 @@ export default function ProjectsSection() {
                                 title={project.title}
                                 description={project.description}
                                 dates={project.dates}
-                                tags={project.technologies}
+                                tags={project.techStack}
                                 image={project.image}
                                 video={project.video}
                                 images={project.images}
@@ -57,7 +58,7 @@ export default function ProjectsSection() {
                         </BlurFade>
                     ))}
                 </div>
-                {DATA.projects.length > DEFAULT_VISIBLE && (
+                {data.projects.length > DEFAULT_VISIBLE && (
                     <div className="flex justify-center">
                         <Link
                             href="/projects"

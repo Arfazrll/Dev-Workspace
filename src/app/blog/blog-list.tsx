@@ -14,7 +14,7 @@ const PAGE_SIZE = 5;
 const BLUR_FADE_DELAY = 0.04;
 
 export default function BlogList() {
-    const { t } = useTranslation();
+    const { t, lang } = useTranslation();
     const router = useRouter();
     const searchParams = useSearchParams();
     const pageParam = searchParams.get("page");
@@ -27,7 +27,7 @@ export default function BlogList() {
 
     // Filter and Sort posts
     const processedPosts = useMemo(() => {
-        let filtered = [...allPosts];
+        let filtered = allPosts.filter(post => (post as any).lang === lang);
 
         // Search filter (title or topics)
         if (searchQuery) {
@@ -87,11 +87,11 @@ export default function BlogList() {
                             <h1 className="text-2xl font-semibold tracking-tight mb-2">
                                 {t.blog}{" "}
                                 <span className="ml-1 bg-card border border-border rounded-md px-2 py-1 text-muted-foreground text-sm">
-                                    {processedPosts.length} posts
+                                    {t.postsCount(processedPosts.length)}
                                 </span>
                             </h1>
                             <p className="text-sm text-muted-foreground">
-                                My thoughts on software development, life, and more.
+                                {t.blogDescription}
                             </p>
                         </div>
 
@@ -209,7 +209,7 @@ export default function BlogList() {
                         <BlurFade delay={BLUR_FADE_DELAY * 4}>
                             <div className="flex items-center justify-between mt-12 w-full">
                                 <span className="text-sm font-medium text-muted-foreground tabular-nums opacity-60">
-                                    Page {pagination.page} of {pagination.totalPages}
+                                    {t.pageOf(pagination.page, pagination.totalPages)}
                                 </span>
                                 <div className="flex items-center gap-3">
                                     <button
@@ -237,14 +237,14 @@ export default function BlogList() {
                 <BlurFade delay={BLUR_FADE_DELAY * 2}>
                     <div className="flex flex-col items-center justify-center py-12 px-4 border border-border rounded-xl">
                         <p className="text-muted-foreground text-center">
-                            {searchQuery ? "No posts match your search." : "No blog posts yet. Check back soon!"}
+                            {searchQuery ? t.noPostsMatch : t.noPostsYet}
                         </p>
                         {searchQuery && (
                             <button
                                 onClick={() => setSearchQuery("")}
                                 className="mt-4 text-sm text-primary hover:underline font-medium"
                             >
-                                Clear search
+                                {t.clearSearch}
                             </button>
                         )}
                     </div>

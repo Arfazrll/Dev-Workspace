@@ -1,0 +1,58 @@
+---
+title: "10 Tips Performa Next.js untuk Aplikasi Produksi"
+publishedAt: "2026-12-05"
+updatedAt: "2026-12-05"
+author: "Syahril Arfian Almazril"
+summary: "Teknik optimasi praktis untuk membuat aplikasi Next.js Anda secepat kilat di produksi."
+image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=192&fit=crop"
+lang: "id"
+topics: ["Next.js", "Performa", "Pengembangan Web"]
+---
+
+Performa bukanlah pilihan—itu adalah fitur. Berikut adalah tips yang telah teruji untuk mengoptimalkan aplikasi Next.js.
+
+# 2. Optimalkan Gambar
+
+Selalu gunakan `next/image`
+
+```tsx
+import Image from 'next/image';
+
+export function Hero() {
+  return (
+    <Image
+      src="/hero.jpg"
+      alt="Hero image"
+      width={1200}
+      height={600}
+      priority // Muat segera untuk LCP
+      placeholder="blur"
+      blurDataURL="data:image/jpeg;base64,..."
+    />
+  );
+}
+```
+
+
+## 4. Implementasikan Caching yang Tepat
+
+| Strategi | Kasus Penggunaan | TTL |
+|----------|----------|-----|
+| `force-cache` | Data statis | Selamanya |
+| `revalidate: 3600` | Semi-statis | 1 jam |
+| `revalidate: 60` | Sering diperbarui | 1 menit |
+| `no-store` | Data real-time | Jangan pernah di-cache |
+
+## 5. Minimalkan Komponen Client
+
+Setiap direktif `'use client'` menambah beban bundle JavaScript Anda. Jaga agar komponen client tetap kecil dan terfokus.
+
+## 6. Analisis Bundle
+
+```bash title="terminal"
+# Instal analyzer
+npm install @next/bundle-analyzer
+
+# Jalankan analisis
+ANALYZE=true npm run build
+```

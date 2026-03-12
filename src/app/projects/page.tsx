@@ -1,7 +1,7 @@
 "use client";
 import BlurFade from "@/components/magicui/blur-fade";
 import { ProjectCard } from "@/components/project-card";
-import { portfolioData } from "@/data/portfolio";
+import { DATA } from "@/data/resume";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Search, X, ExternalLink, Github } from "lucide-react";
 import { useTranslation } from "@/i18n/context";
@@ -15,7 +15,8 @@ function slugify(text: string): string {
 }
 
 export default function ProjectsPage() {
-    const { t } = useTranslation();
+    const { t, lang } = useTranslation();
+    const data = DATA[lang as keyof typeof DATA] || DATA.en;
     const [searchQuery, setSearchQuery] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -30,15 +31,15 @@ export default function ProjectsPage() {
     }, [currentPage]);
 
     const filteredProjects = useMemo(() => {
-        return portfolioData.projects.filter((project) => {
+        return data.projects.filter((project: any) => {
             const searchLower = searchQuery.toLowerCase();
             const matchesTitle = project.title.toLowerCase().includes(searchLower);
-            const matchesTech = project.techStack.some((tech) =>
+            const matchesTech = project.techStack.some((tech: string) =>
                 tech.toLowerCase().includes(searchLower)
             );
             return matchesTitle || matchesTech;
         });
-    }, [searchQuery]);
+    }, [searchQuery, data.projects]);
 
     const paginatedProjects = useMemo(() => {
         const start = (currentPage - 1) * PROJECTS_PER_PAGE;
@@ -62,7 +63,7 @@ export default function ProjectsPage() {
                     <div className="space-y-2">
                         <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">{t.allProjects}</h1>
                         <p className="text-muted-foreground">
-                            {t.allProjectsDescription(portfolioData.projects.length)}
+                            {t.allProjectsDescription(data.projects.length)}
                         </p>
                     </div>
 
@@ -71,7 +72,7 @@ export default function ProjectsPage() {
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                         <input
                             type="text"
-                            placeholder="Search projects or tech"
+                            placeholder={t.searchProjects}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full bg-muted/20 border border-border/50 rounded-xl py-2.5 pl-10 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
@@ -98,17 +99,14 @@ export default function ProjectsPage() {
                                 className="h-full"
                             >
                                 <ProjectCard
-                                    href={`/projects/${slugify(project.title)}`}
+                                    href={project.href}
                                     title={project.title}
                                     description={project.description}
-                                    dates={project.customTimeline || `${new Date(project.startDate).getFullYear()}`}
+                                    dates={project.dates}
                                     tags={project.techStack}
-                                    image={project.images?.[0]}
+                                    image={project.image}
                                     images={project.images || []}
-                                    links={project.repoUrl ? [
-                                        ...(project.demoUrl && project.demoUrl !== "#" ? [{ icon: <ExternalLink className="size-3" />, type: "Website", href: project.demoUrl }] : []),
-                                        { icon: <Github className="size-3" />, type: "Source", href: project.repoUrl }
-                                    ] as any : []}
+                                    links={project.links}
                                 />
                             </BlurFade>
                         ))}
@@ -118,7 +116,7 @@ export default function ProjectsPage() {
                     {totalPages > 1 && (
                         <div className="flex items-center justify-between mt-12 w-full max-w-[900px] mx-auto">
                             <span className="text-sm font-medium text-muted-foreground tabular-nums opacity-60">
-                                Page {currentPage} of {totalPages}
+                                {lang === "en" ? `Page ${currentPage} of ${totalPages}` : `Halaman ${currentPage} dari ${totalPages}`}
                             </span>
                             <div className="flex items-center gap-3">
                                 <button
@@ -146,15 +144,15 @@ export default function ProjectsPage() {
                     <div className="bg-muted/30 p-4 rounded-full mb-4">
                         <Search className="size-8 text-muted-foreground opacity-30" />
                     </div>
-                    <h3 className="text-xl font-bold">No projects found</h3>
+                    <h3 className="text-xl font-bold">{t.noProjectsFound}</h3>
                     <p className="text-muted-foreground mt-1 max-w-xs mx-auto text-sm">
-                        We couldn't find any projects matching your search.
+                        {t.noProjectsMatching}
                     </p>
                     <button
                         onClick={() => setSearchQuery("")}
                         className="mt-6 px-5 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-semibold hover:bg-primary/90 transition-colors"
                     >
-                        Clear search
+                        {t.clearSearch}
                     </button>
                 </div>
             )}

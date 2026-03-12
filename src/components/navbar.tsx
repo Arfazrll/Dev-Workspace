@@ -1,3 +1,4 @@
+"use client";
 import { Dock, DockIcon } from "@/components/magicui/dock";
 import { ModeToggle } from "@/components/mode-toggle";
 import { LanguageToggle } from "@/components/language-toggle";
@@ -11,12 +12,16 @@ import {
 import { DATA } from "@/data/resume";
 import { ChatbotTrigger } from "@/components/chatbot";
 import { Icons } from "@/components/icons";
+import { useTranslation } from "@/i18n/context";
 
 export default function Navbar() {
+  const { t, lang } = useTranslation();
+  const data = DATA[lang as keyof typeof DATA] || DATA.en;
+
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-4 z-30">
       <Dock className="z-50 pointer-events-auto relative h-14 p-2 w-fit mx-auto flex gap-2 border bg-card/90 backdrop-blur-3xl shadow-[0_0_10px_3px] shadow-primary/5">
-        {DATA.navbar.map((item) => {
+        {data.navbar.map((item: any) => {
           const isExternal = item.href.startsWith("http");
           return (
             <Tooltip key={item.href}>
@@ -50,7 +55,7 @@ export default function Navbar() {
         <Tooltip>
           <TooltipTrigger asChild>
             <a
-              href={DATA.contact.social.LinkedIn.url}
+              href={data.contact.social.LinkedIn.url}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -82,7 +87,7 @@ export default function Navbar() {
             sideOffset={8}
             className="rounded-xl bg-primary text-primary-foreground px-4 py-2 text-sm shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
           >
-            <p>Ask AI Assistant</p>
+            <p>{lang === "en" ? "Ask AI Assistant" : "Tanya Asisten AI"}</p>
             <TooltipArrow className="fill-primary" />
           </TooltipContent>
         </Tooltip>
@@ -90,7 +95,7 @@ export default function Navbar() {
         <Tooltip>
           <TooltipTrigger asChild>
             <a
-              href={`mailto:${DATA.contact.email}?subject=${encodeURIComponent("Inquiry regarding your Portfolio / Collaboration Opportunity")}&body=${encodeURIComponent("Dear Syahril Arfian Almazril,\n\nI recently viewed your portfolio and I am very impressed with your background in AI and Software Engineering.\n\nI would love to discuss a potential opportunity or collaboration with you regarding [insert topic here].\n\nLooking forward to hearing from you.\n\nBest regards,\n[Your Name]\n[Your Company/Organization]")}`}
+              href={`mailto:${data.contact.email}?subject=${encodeURIComponent(lang === "en" ? "Inquiry regarding your Portfolio / Collaboration Opportunity" : "Pertanyaan mengenai Portofolio Anda / Peluang Kolaborasi")}&body=${encodeURIComponent(lang === "en" ? "Dear Syahril Arfian Almazril,\n\nI recently viewed your portfolio and I am very impressed with your background in AI and Software Engineering.\n\nI would love to discuss a potential opportunity or collaboration with you regarding [insert topic here].\n\nLooking forward to hearing from you.\n\nBest regards,\n[Your Name]\n[Your Company/Organization]" : "Halo Syahril Arfian Almazril,\n\nSaya baru saja melihat portofolio Anda dan saya sangat terkesan dengan latar belakang Anda di bidang AI dan Rekayasa Perangkat Lunak.\n\nSaya ingin mendiskusikan peluang atau kolaborasi potensial dengan Anda mengenai [masukkan topik di sini].\n\nMenunggu kabar dari Anda.\n\nHormat saya,\n[Nama Anda]\n[Perusahaan/Organisasi Anda]")}`}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -104,7 +109,7 @@ export default function Navbar() {
             sideOffset={8}
             className="rounded-xl bg-primary text-primary-foreground px-4 py-2 text-sm shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
           >
-            <p>Send Email</p>
+            <p>{data.contact.social.email.name}</p>
             <TooltipArrow className="fill-primary" />
           </TooltipContent>
         </Tooltip>
@@ -123,7 +128,7 @@ export default function Navbar() {
             sideOffset={8}
             className="rounded-xl bg-primary text-primary-foreground px-4 py-2 text-sm shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
           >
-            <p>Language</p>
+            <p>{lang === "en" ? "Language" : "Bahasa"}</p>
             <TooltipArrow className="fill-primary" />
           </TooltipContent>
         </Tooltip>
@@ -138,7 +143,7 @@ export default function Navbar() {
             sideOffset={8}
             className="rounded-xl bg-primary text-primary-foreground px-4 py-2 text-sm shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.5)]"
           >
-            <p>Theme</p>
+            <p>{lang === "en" ? "Theme" : "Tema"}</p>
             <TooltipArrow className="fill-primary" />
           </TooltipContent>
         </Tooltip>

@@ -9,24 +9,25 @@ import BlurFade from "@/components/magicui/blur-fade";
 const BLUR_FADE_DELAY = 0.04;
 
 export default function ContactPage() {
-    const { t } = useTranslation();
+    const { t, lang } = useTranslation();
+    const data = DATA[lang as keyof typeof DATA] || DATA.en;
 
     const socialLinks = [
         {
             name: "LinkedIn",
-            url: DATA.contact.social.LinkedIn.url,
+            url: data.contact.social.LinkedIn.url,
             icon: Linkedin,
             color: "group-hover:text-[#0A66C2]",
         },
         {
             name: "GitHub",
-            url: DATA.contact.social.GitHub.url,
+            url: data.contact.social.GitHub.url,
             icon: Github,
             color: "group-hover:text-foreground", // Adapted to theme
         },
         {
             name: "Instagram",
-            url: DATA.contact.social.Instagram.url,
+            url: data.contact.social.Instagram.url,
             icon: Instagram,
             color: "group-hover:text-[#E4405F]",
         },
@@ -44,7 +45,7 @@ export default function ContactPage() {
         },
         {
             name: "Email",
-            url: `mailto:${DATA.contact.email}?subject=${encodeURIComponent("Inquiry regarding your Portfolio / Collaboration Opportunity")}&body=${encodeURIComponent("Dear Syahril Arfian Almazril,\n\nI recently viewed your portfolio and I am very impressed with your background in AI and Software Engineering.\n\nI would love to discuss a potential opportunity or collaboration with you regarding [insert topic here].\n\nLooking forward to hearing from you.\n\nBest regards,\n[Your Name]\n[Your Company/Organization]")}`,
+            url: `mailto:${data.contact.email}?subject=${encodeURIComponent("Inquiry regarding your Portfolio / Collaboration Opportunity")}&body=${encodeURIComponent("Dear Syahril Arfian Almazril,\n\nI recently viewed your portfolio and I am very impressed with your background in AI and Software Engineering.\n\nI would love to discuss a potential opportunity or collaboration with you regarding [insert topic here].\n\nLooking forward to hearing from you.\n\nBest regards,\n[Your Name]\n[Your Company/Organization]")}`,
             icon: Mail,
             color: "group-hover:text-[#EA4335]",
         },
@@ -58,15 +59,15 @@ export default function ContactPage() {
                     className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-3 py-2 w-fit inline-flex items-center gap-2 mb-8 group bg-background"
                 >
                     <ChevronLeft className="size-4 group-hover:-translate-x-1 transition-transform" />
-                    Back to Home
+                    {t.backToHome}
                 </Link>
             </BlurFade>
 
             <BlurFade delay={BLUR_FADE_DELAY * 2}>
                 <div className="flex flex-col gap-2 mb-8">
-                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Let&apos;s Connect</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold tracking-tight">{t.letsConnect}</h1>
                     <p className="text-muted-foreground text-lg">
-                        Find me on these platforms or send me a direct email.
+                        {t.contactPlatformDescription}
                     </p>
                 </div>
             </BlurFade>

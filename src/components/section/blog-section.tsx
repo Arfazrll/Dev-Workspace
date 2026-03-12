@@ -7,10 +7,11 @@ import Link from "next/link";
 import { motion } from "motion/react";
 
 export default function BlogSection() {
-    const { t } = useTranslation();
+    const { t, lang } = useTranslation();
 
-    // Get latest 3 posts
+    // Get latest 3 posts for current language
     const latestPosts = [...allPosts]
+        .filter((post: any) => post.lang === lang)
         .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
         .slice(0, 3);
 

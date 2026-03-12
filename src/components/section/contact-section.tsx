@@ -5,7 +5,9 @@ import { DATA } from "@/data/resume";
 import { useTranslation } from "@/i18n/context";
 
 export default function ContactSection() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
+  const data = DATA[lang as keyof typeof DATA] || DATA.en;
+
   return (
     <div className="border rounded-xl p-10 relative">
       <div className="absolute -top-4 border bg-primary z-10 rounded-xl px-4 py-1 left-1/2 -translate-x-1/2">
@@ -29,7 +31,7 @@ export default function ContactSection() {
         <p className="mx-auto max-w-lg text-muted-foreground text-balance">
           {t.contactDescription}{" "}
           <Link
-            href={DATA.contact.social.LinkedIn.url}
+            href={data.contact.social.LinkedIn.url}
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-500 hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
@@ -38,7 +40,7 @@ export default function ContactSection() {
           </Link>{" "}
           {t.contactOr}{" "}
           <Link
-            href={`mailto:${DATA.contact.email}?subject=${encodeURIComponent("Inquiry regarding your Portfolio / Collaboration Opportunity")}&body=${encodeURIComponent("Dear Syahril Arfian Almazril,\n\nI recently viewed your portfolio and I am very impressed with your background in AI and Software Engineering.\n\nI would love to discuss a potential opportunity or collaboration with you regarding [insert topic here].\n\nLooking forward to hearing from you.\n\nBest regards,\n[Your Name]\n[Your Company/Organization]")}`}
+            href={`mailto:${data.contact.email}?subject=${encodeURIComponent(t.contactSubject)}&body=${encodeURIComponent(t.contactBody)}`}
             className="text-blue-500 hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm"
           >
             {t.contactEmail}

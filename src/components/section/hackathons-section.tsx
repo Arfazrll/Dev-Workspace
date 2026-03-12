@@ -11,8 +11,9 @@ const BLUR_FADE_DELAY = 0.04;
 const DEFAULT_VISIBLE = 5;
 
 export default function HackathonsSection() {
-  const { t } = useTranslation();
-  const visibleItems = DATA.hackathons.slice(0, DEFAULT_VISIBLE);
+  const { t, lang } = useTranslation();
+  const data = DATA[lang as keyof typeof DATA] || DATA.en;
+  const visibleItems = data.hackathons.slice(0, DEFAULT_VISIBLE);
 
   return (
     <section id="hackathons" className="overflow-hidden">
@@ -28,7 +29,7 @@ export default function HackathonsSection() {
           <div className="flex flex-col gap-y-3 items-center justify-center">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">{t.awardsCertifications}</h2>
             <p className="text-muted-foreground md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed text-balance text-center">
-              {t.achievementsDescription(DATA.hackathons.length)}
+              {t.achievementsDescription(data.hackathons.length)}
             </p>
           </div>
         </div>
@@ -70,7 +71,7 @@ export default function HackathonsSection() {
             </BlurFade>
           ))}
         </div>
-        {DATA.hackathons.length > DEFAULT_VISIBLE && (
+        {data.hackathons.length > DEFAULT_VISIBLE && (
           <div className="flex justify-center mt-4">
             <Link
               href="/achievements"

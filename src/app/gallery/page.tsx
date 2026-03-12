@@ -1,6 +1,6 @@
 "use client";
 
-import { portfolioData } from "@/data/portfolio";
+import { DATA } from "@/data/resume";
 import Link from "next/link";
 import { useTranslation } from "@/i18n/context";
 import { useRef, useEffect, useState, useMemo } from "react";
@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, X, Calendar, ListFilter, Check } from "lucide-react";
 
 interface GalleryRowProps {
-    items: typeof portfolioData.gallery;
+    items: any[];
     rowIndex: number;
     startIndex: number;
     onImageClick: (index: number) => void;
@@ -96,19 +96,21 @@ function GalleryRow({ items, rowIndex, startIndex, onImageClick }: GalleryRowPro
 }
 
 export default function GalleryPage() {
-    const { t } = useTranslation();
+    const { t, lang } = useTranslation();
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
     const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
     const [isSortOpen, setIsSortOpen] = useState(false);
     const sortRef = useRef<HTMLDivElement>(null);
 
+    const data = DATA[lang as keyof typeof DATA] || DATA.en;
+
     const sortedItems = useMemo(() => {
-        return [...portfolioData.gallery].sort((a, b) => {
+        return [...data.gallery].sort((a: any, b: any) => {
             const dateA = new Date(a.date).getTime();
             const dateB = new Date(b.date).getTime();
             return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
         });
-    }, [sortOrder]);
+    }, [sortOrder, data.gallery]);
 
     const row1 = sortedItems.slice(0, 5);
     const row2 = sortedItems.slice(5, 10);
@@ -168,11 +170,11 @@ export default function GalleryPage() {
                                     {t.gallery}
                                 </h1>
                                 <span className="text-sm md:text-base font-bold px-4 py-1.5 rounded-full bg-foreground text-background dark:bg-zinc-900 dark:text-white/90 dark:border dark:border-white/10 uppercase tracking-[0.2em] shadow-2xl">
-                                    {sortedItems.length} {t.gallery ? 'POST' : ''}
+                                    {sortedItems.length} {t.posts}
                                 </span>
                             </div>
                             <p className="text-muted-foreground text-sm md:text-xl max-w-[600px] font-medium leading-relaxed opacity-80">
-                                A curated visual journey through research, technical milestones, and professional experiences.
+                                {t.galleryDescription}
                             </p>
                         </div>
                     </div>
@@ -187,7 +189,7 @@ export default function GalleryPage() {
                                     <ListFilter className="size-4 text-muted-foreground group-hover:text-foreground" />
                                 </div>
                                 <span className="text-sm font-bold text-muted-foreground group-hover:text-foreground uppercase tracking-wider">
-                                    {sortOrder === "newest" ? "Newest First" : "Oldest First"}
+                                    {sortOrder === "newest" ? t.newestFirst : t.oldestFirst}
                                 </span>
                             </div>
                             <ChevronRight className={`size-4 text-muted-foreground/30 transition-transform duration-300 ${isSortOpen ? 'rotate-90' : 'rotate-0'}`} />
@@ -207,14 +209,14 @@ export default function GalleryPage() {
                                             onClick={() => { setSortOrder("newest"); setIsSortOpen(false); }}
                                             className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 group/opt ${sortOrder === "newest" ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 text-muted-foreground hover:text-foreground'}`}
                                         >
-                                            <span className="text-sm font-bold uppercase tracking-wider">Newest First</span>
+                                            <span className="text-sm font-bold uppercase tracking-wider">{t.newestFirst}</span>
                                             {sortOrder === "newest" && <Check className="size-4 text-primary" />}
                                         </button>
                                         <button
                                             onClick={() => { setSortOrder("oldest"); setIsSortOpen(false); }}
                                             className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 group/opt ${sortOrder === "oldest" ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 text-muted-foreground hover:text-foreground'}`}
                                         >
-                                            <span className="text-sm font-bold uppercase tracking-wider">Oldest First</span>
+                                            <span className="text-sm font-bold uppercase tracking-wider">{t.oldestFirst}</span>
                                             {sortOrder === "oldest" && <Check className="size-4 text-primary" />}
                                         </button>
                                     </div>

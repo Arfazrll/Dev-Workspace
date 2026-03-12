@@ -9,7 +9,8 @@ import { useTranslation } from "@/i18n/context";
 import { useState, useMemo, useEffect } from "react";
 
 export default function AchievementsPage() {
-    const { t } = useTranslation();
+    const { t, lang } = useTranslation();
+    const data = DATA[lang as keyof typeof DATA] || DATA.en;
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedCert, setSelectedCert] = useState<{ title: string; image: string; type: string } | null>(null);
     const [certPage, setCertPage] = useState(1);
@@ -39,24 +40,24 @@ export default function AchievementsPage() {
 
     // Filter awards and certifications based on search query
     const filteredAwards = useMemo(() => {
-        const awards = DATA.hackathons.filter((h) => h.type === "award");
+        const awards = data.hackathons.filter((h) => h.type === "award");
         if (!searchQuery) return awards;
         return awards.filter(
             (h) =>
                 h.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 h.location.toLowerCase().includes(searchQuery.toLowerCase())
         );
-    }, [searchQuery]);
+    }, [searchQuery, data.hackathons]);
 
     const filteredCertifications = useMemo(() => {
-        const certifications = DATA.hackathons.filter((h) => h.type === "certification");
+        const certifications = data.hackathons.filter((h) => h.type === "certification");
         if (!searchQuery) return certifications;
         return certifications.filter(
             (h) =>
                 h.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 h.location.toLowerCase().includes(searchQuery.toLowerCase())
         );
-    }, [searchQuery]);
+    }, [searchQuery, data.hackathons]);
 
     const paginatedCertifications = useMemo(() => {
         const start = (certPage - 1) * CERTS_PER_PAGE;
@@ -98,7 +99,7 @@ export default function AchievementsPage() {
                                     <div className="absolute inset-0 bg-transparent flex items-center justify-center pointer-events-none">
                                         <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm text-[10px] font-bold h-6 shadow-sm border-primary/20">
                                             <FileText className="size-3 mr-1" />
-                                            PDF PREVIEW
+                                            {t.pdfPreview}
                                         </Badge>
                                     </div>
                                 </div>
@@ -112,13 +113,13 @@ export default function AchievementsPage() {
                             )
                         ) : (
                             <div className="flex h-full w-full items-center justify-center bg-muted/10">
-                                <span className="text-xs text-muted-foreground italic text-center px-4 font-medium">No Preview Available</span>
+                                <span className="text-xs text-muted-foreground italic text-center px-4 font-medium">{t.noPreviewAvailable}</span>
                             </div>
                         )}
                         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <Badge variant="outline" className="bg-background/80 backdrop-blur-sm border-primary/40 px-4 py-2">
                                 <ExternalLink className="size-4 mr-2" />
-                                {isPdf ? "Read Full PDF" : "View Full Image"}
+                                {isPdf ? t.readFullPdf : t.viewFullImage}
                             </Badge>
                         </div>
                     </div>
@@ -174,7 +175,7 @@ export default function AchievementsPage() {
                             {t.allAchievementsTitle}
                         </h1>
                         <p className="text-muted-foreground text-sm md:text-lg max-w-[600px]">
-                            {t.allAchievementsDescription(DATA.hackathons.length)}
+                            {t.allAchievementsDescription(data.hackathons.length)}
                         </p>
                     </div>
 
@@ -183,7 +184,7 @@ export default function AchievementsPage() {
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
                         <input
                             type="text"
-                            placeholder="Search by name"
+                            placeholder={t.searchByName}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full bg-muted/20 border border-border/50 rounded-xl py-3 md:py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
@@ -221,7 +222,7 @@ export default function AchievementsPage() {
                     {totalCertPages > 1 && (
                         <div className="flex items-center justify-between mt-12 w-full">
                             <span className="text-sm font-medium text-muted-foreground tabular-nums opacity-60">
-                                Page {certPage} of {totalCertPages}
+                                {t.pageOf(certPage, totalCertPages)}
                             </span>
                             <div className="flex items-center gap-3">
                                 <button
@@ -250,13 +251,13 @@ export default function AchievementsPage() {
                     <div className="bg-muted/30 p-5 rounded-full mb-5">
                         <Search className="size-10 text-muted-foreground opacity-40" />
                     </div>
-                    <h3 className="text-2xl font-bold">No results found</h3>
-                    <p className="text-muted-foreground mt-2 max-w-sm mx-auto text-lg">We couldn't find any achievements matching your search.</p>
+                    <h3 className="text-2xl font-bold">{t.noResultsFound}</h3>
+                    <p className="text-muted-foreground mt-2 max-w-sm mx-auto text-lg">{t.noAchievementsFound}</p>
                     <button
                         onClick={() => setSearchQuery("")}
                         className="mt-6 px-6 py-2 bg-primary text-primary-foreground rounded-lg font-bold hover:bg-primary/90 transition-colors"
                     >
-                        Clear search
+                        {t.clearSearch}
                     </button>
                 </div>
             )}
@@ -285,7 +286,7 @@ export default function AchievementsPage() {
                             <button
                                 onClick={() => setSelectedCert(null)}
                                 className="p-1.5 hover:bg-muted rounded-xl transition-all hover:rotate-90 duration-300 ml-4"
-                                aria-label="Close modal"
+                                aria-label={t.closeModal}
                             >
                                 <X className="size-6" />
                             </button>
@@ -312,7 +313,7 @@ export default function AchievementsPage() {
                             ) : (
                                 <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground p-12 text-center">
                                     <FileText className="size-16 mb-4 opacity-20" />
-                                    <p className="text-lg font-medium">Preview not available</p>
+                                    <p className="text-lg font-medium">{t.previewNotAvailable}</p>
                                 </div>
                             )}
                         </div>

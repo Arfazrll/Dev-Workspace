@@ -1,4 +1,4 @@
- 
+
 import { ImageResponse } from "next/og";
 import { DATA } from "@/data/resume";
 
@@ -110,8 +110,8 @@ export default async function Image() {
         const fontData = await getFontData();
         const title = "Blog";
         const description = "Thoughts on software development, life, and more.";
-        const imageUrl = DATA.avatarUrl
-            ? new URL(DATA.avatarUrl, DATA.url).toString()
+        const imageUrl = DATA.en.avatarUrl
+            ? new URL(DATA.en.avatarUrl, DATA.en.url).toString()
             : undefined;
 
         return new ImageResponse(

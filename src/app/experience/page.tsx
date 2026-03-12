@@ -33,7 +33,9 @@ function LogoImage({ src, alt }: { src: string; alt: string }) {
 }
 
 export default function ExperiencePage() {
-    const { t } = useTranslation();
+    const { t, lang } = useTranslation();
+    const data = DATA[lang as keyof typeof DATA] || DATA.en;
+
     return (
         <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-4">
@@ -46,12 +48,12 @@ export default function ExperiencePage() {
                 </Link>
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl">{t.allExperience}</h1>
                 <p className="text-muted-foreground">
-                    {t.experienceDescription(DATA.work.length)}
+                    {t.experienceDescription(data.work.length)}
                 </p>
             </div>
 
             <Accordion type="single" collapsible className="w-full grid gap-6 relative before:absolute before:inset-y-0 before:left-4 md:before:left-5 before:w-px before:bg-border/60">
-                {DATA.work.map((work, index) => (
+                {data.work.map((work, index) => (
                     <AccordionItem
                         key={`${work.company}-${index}`}
                         value={`${work.company}-${index}`}
@@ -89,7 +91,7 @@ export default function ExperiencePage() {
                                 </div>
                                 <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground sm:text-right flex-none ml-11 sm:ml-0">
                                     <span>
-                                        {work.start} - {work.end ?? "Present"}
+                                        {work.start} - {work.end ?? t.present}
                                     </span>
                                 </div>
                             </div>

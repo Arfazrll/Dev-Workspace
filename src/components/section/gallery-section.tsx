@@ -1,18 +1,23 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { portfolioData } from "@/data/portfolio";
+import { DATA } from "@/data/resume";
 import { useTranslation } from "@/i18n/context";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight, ArrowRight, X, Calendar } from "lucide-react";
 
-export default function GallerySection() {
-    const { t } = useTranslation();
+interface GallerySectionProps {
+    interactive?: boolean;
+}
+
+export default function GallerySection({ interactive = true }: GallerySectionProps) {
+    const { t, lang } = useTranslation();
     const scrollRef = useRef<HTMLDivElement>(null);
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-    const items = portfolioData.gallery;
+    const data = DATA[lang as keyof typeof DATA] || DATA.en;
+    const items = data.gallery;
 
     // Duplicate items to create infinite effect
     const duplicatedItems = [
@@ -121,8 +126,8 @@ export default function GallerySection() {
                             return (
                                 <div
                                     key={`${item.id}-${index}`}
-                                    className="relative flex-none w-[200px] sm:w-[280px] aspect-[1.2/1] rounded-3xl overflow-hidden border border-border group cursor-pointer bg-muted transition-all duration-300"
-                                    onClick={() => setSelectedImageIndex(originalIndex)}
+                                    className={`relative flex-none w-[200px] sm:w-[280px] aspect-[1.2/1] rounded-3xl overflow-hidden border border-border group bg-muted transition-all duration-300 ${interactive ? 'cursor-pointer' : 'cursor-default'}`}
+                                    onClick={() => interactive && setSelectedImageIndex(originalIndex)}
                                 >
                                     <img
                                         src={item.url}
@@ -141,7 +146,7 @@ export default function GallerySection() {
             </div>
 
             <AnimatePresence mode="wait">
-                {selectedImageIndex !== null && (
+                {interactive && selectedImageIndex !== null && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}

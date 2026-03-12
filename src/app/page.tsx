@@ -52,7 +52,9 @@ const levelColors: Record<string, string> = {
 };
 
 export default function Page() {
-  const { t } = useTranslation();
+  const { t, lang } = useTranslation();
+  const data = DATA[lang as keyof typeof DATA] || DATA.en;
+
   return (
     <main className="min-h-dvh flex flex-col gap-10 relative">
       <section id="hero">
@@ -62,7 +64,7 @@ export default function Page() {
               <BlurFade delay={BLUR_FADE_DELAY} yOffset={8}>
                 <h1 className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl leading-tight">
 
-                  <span>{DATA.name}</span>
+                  <span>{data.name}</span>
                   <BadgeCheck
                     className="inline-block ml-2 size-7 md:size-9 text-[#1DA1F2] -mt-1"
                     fill="currentColor"
@@ -73,17 +75,17 @@ export default function Page() {
               <BlurFadeText
                 className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl"
                 delay={BLUR_FADE_DELAY}
-                text={DATA.description}
+                text={data.description}
               />
               <BlurFade delay={BLUR_FADE_DELAY * 2}>
                 <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs md:text-sm text-muted-foreground pt-3">
                   <div className="flex items-center gap-1.5">
                     <div className="size-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span>Available for opportunity</span>
+                    <span>{t.availableForOpportunity}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <MapPin className="size-3.5" />
-                    <span>Jakarta, Indonesia</span>
+                    <span>{data.location}</span>
                   </div>
                   <div className="flex items-center gap-1.5 border-l pl-4 border-border ml-1">
                     <span className="font-mono pt-0.5">
@@ -96,14 +98,14 @@ export default function Page() {
             <BlurFade delay={BLUR_FADE_DELAY} className="order-1 md:order-2">
               <div className="relative inline-block w-fit group/avatar">
                 <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
-                  <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
-                  <AvatarFallback>{DATA.initials}</AvatarFallback>
+                  <AvatarImage alt={data.name} src={data.avatarUrl} />
+                  <AvatarFallback>{data.initials}</AvatarFallback>
                 </Avatar>
                 <Link
                   href="/contact"
                   className="absolute bottom-0 right-0 md:bottom-1 md:right-1 bg-background border border-border rounded-full p-1.5 shadow-sm hover:shadow-md hover:bg-accent transition-all duration-300 flex items-center justify-center group-hover/avatar:ring-4 ring-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring z-10"
-                  aria-label="View Contact Information"
-                  title="Contact / Profiles"
+                  aria-label={t.viewContactInfo}
+                  title={t.contactProfiles}
                 >
                   <ChevronDown className="size-4 md:size-5 text-muted-foreground group-hover/avatar:text-foreground transition-colors" />
                 </Link>
@@ -120,7 +122,7 @@ export default function Page() {
           <BlurFade delay={BLUR_FADE_DELAY * 4}>
             <div className="prose max-w-full text-justify font-sans leading-relaxed text-muted-foreground dark:prose-invert">
               <Markdown>
-                {DATA.summary}
+                {data.summary}
               </Markdown>
             </div>
           </BlurFade>
@@ -142,7 +144,7 @@ export default function Page() {
             <h2 className="text-xl font-bold">{t.education}</h2>
           </BlurFade>
           <div className="flex flex-col gap-8">
-            {DATA.education.map((education, index) => (
+            {data.education.map((education, index) => (
               <BlurFade
                 key={education.school}
                 delay={BLUR_FADE_DELAY * 8 + index * 0.05}
@@ -186,7 +188,7 @@ export default function Page() {
                         )}
                         {education.gpa && (
                           <span className="text-xs mt-0.5 opacity-80">
-                            GPA: {education.gpa}
+                            {t.gpa}: {education.gpa}
                           </span>
                         )}
                       </div>
@@ -233,7 +235,7 @@ export default function Page() {
             <div className="flex flex-col gap-3">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.tools}</h3>
               <div className="flex flex-wrap gap-2">
-                {portfolioData.tools.slice(0, 6).map((tool) => (
+                {data.tools.slice(0, 6).map((tool: any) => (
                   <div key={tool.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
                     {tool.icon && <img src={tool.icon} alt={tool.name} className="size-4 rounded overflow-hidden object-contain dark:invert" />}
                     <span className="text-foreground text-sm font-medium">{tool.name}</span>
@@ -252,7 +254,15 @@ export default function Page() {
                     key={skill.name}
                     className={`border bg-background ${levelColors[skill.level] || "border-border ring-border/20"} ring-2 rounded-xl h-8 w-fit px-4 flex items-center gap-2 transition-colors duration-300`}
                   >
-                    <span className="text-foreground text-sm font-medium">{skill.name}</span>
+                    <span className="text-foreground text-sm font-medium">
+                      {skill.name === 'Data Science' ? t.dataScience :
+                        skill.name === 'Machine Learning' ? t.machineLearning :
+                          skill.name === 'Deep Learning' ? t.deepLearning :
+                            skill.name === 'NLP' ? t.nlp :
+                              skill.name === 'Full Stack Developer' ? t.fullStackDeveloper :
+                                skill.name === 'System Architecture' ? t.systemArchitecture :
+                                  skill.name}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -263,7 +273,7 @@ export default function Page() {
             <div className="flex flex-col gap-3">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">{t.softSkills}</h3>
               <div className="flex flex-wrap gap-2">
-                {portfolioData.softSkills.slice(0, 6).map((skill) => (
+                {data.softSkills.slice(0, 6).map((skill: any) => (
                   <div key={skill.name} className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center">
                     <span className="text-foreground text-sm font-medium">{skill.name}</span>
                   </div>
@@ -296,7 +306,7 @@ export default function Page() {
       </section>
       <section id="gallery">
         <BlurFade delay={BLUR_FADE_DELAY * 14.5}>
-          <GallerySection />
+          <GallerySection interactive={false} />
         </BlurFade>
       </section>
       <section id="blog">

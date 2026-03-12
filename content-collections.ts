@@ -16,6 +16,7 @@ const posts = defineCollection({
         summary: z.string(),
         image: z.string().optional(),
         topics: z.array(z.string()).optional(),
+        lang: z.enum(["en", "id"]).default("en"),
         content: z.string(),
     }),
     transform: async (document, context) => {

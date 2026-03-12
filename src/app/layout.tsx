@@ -22,17 +22,17 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(DATA.url),
+  metadataBase: new URL(DATA.en.url),
   title: {
-    default: DATA.name,
-    template: `%s | ${DATA.name}`,
+    default: DATA.en.name,
+    template: `%s | ${DATA.en.name}`,
   },
-  description: DATA.description,
+  description: DATA.en.description,
   openGraph: {
-    title: `${DATA.name}`,
-    description: DATA.description,
-    url: DATA.url,
-    siteName: `${DATA.name}`,
+    title: `${DATA.en.name}`,
+    description: DATA.en.description,
+    url: DATA.en.url,
+    siteName: `${DATA.en.name}`,
     locale: "en_US",
     type: "website",
   },
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: `${DATA.name}`,
+    title: `${DATA.en.name}`,
     card: "summary_large_image",
   },
   verification: {
@@ -60,6 +60,10 @@ export const metadata: Metadata = {
       {
         url: "/Arfazrll_light.svg",
         media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/Arfazrll_dark.svg",
+        media: "(prefers-color-scheme: dark)",
       },
       {
         url: "/Arfazrll_dark.svg",

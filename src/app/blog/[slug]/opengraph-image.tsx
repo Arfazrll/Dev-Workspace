@@ -1,4 +1,4 @@
- 
+
 
 import { ImageResponse } from "next/og";
 import { allPosts } from "content-collections";
@@ -130,8 +130,8 @@ export default async function Image({
         const fontData = await getFontData();
         const { slug } = await params;
         const post = allPosts.find((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
-        const imageUrl = DATA.avatarUrl
-            ? new URL(DATA.avatarUrl, DATA.url).toString()
+        const imageUrl = DATA.en.avatarUrl
+            ? new URL(DATA.en.avatarUrl, DATA.en.url).toString()
             : undefined;
 
         if (!post) {
