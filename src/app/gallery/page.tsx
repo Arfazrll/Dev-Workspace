@@ -64,7 +64,7 @@ function GalleryRow({ items, rowIndex, startIndex, onImageClick }: GalleryRowPro
             <div
                 ref={scrollRef}
                 onScroll={handleInfiniteScroll}
-                className="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth items-stretch px-4 sm:px-0"
+                className="flex gap-4 overflow-x-auto no-scrollbar items-stretch px-4 sm:px-0"
             >
                 {duplicatedItems.map((item, idx) => {
                     const originalIndex = startIndex + (idx % items.length);

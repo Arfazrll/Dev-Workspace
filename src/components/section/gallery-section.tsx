@@ -119,7 +119,7 @@ export default function GallerySection({ interactive = true }: GallerySectionPro
                     <div
                         ref={scrollRef}
                         onScroll={handleInfiniteScroll}
-                        className="flex gap-3 overflow-x-auto no-scrollbar scroll-smooth items-stretch py-4"
+                        className="flex gap-3 overflow-x-auto no-scrollbar items-stretch py-4"
                     >
                         {duplicatedItems.map((item, index) => {
                             const originalIndex = index % items.length;

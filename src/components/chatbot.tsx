@@ -21,7 +21,7 @@ export function ChatbotTrigger() {
                 {
                     id: "1",
                     role: "assistant",
-                    content: "Hi there! I'm Syahril's AI assistant. Ask me anything about his projects, skills, or experience!",
+                    content: "Hi there! I'm Azril's AI assistant. Ask me anything about his projects, skills, or experience!",
                 },
             ],
         });
