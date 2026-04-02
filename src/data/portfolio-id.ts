@@ -14,6 +14,68 @@ export const portfolioDataId: PortfolioData = {
         ],
     },
     projects: portfolioData.projects.map(p => {
+        if (p.slug === 'swarm-ai-blog-writer') {
+            return {
+                ...p,
+                title: 'Swarm AI Blog Writer',
+                description: 'Mesin generasi blog multi-agen tingkat produksi yang didukung oleh Pydantic AI dan Groq (Llama 3.3 70B).',
+                longDescription: 'Mesin generasi blog multi-agen tingkat produksi yang didukung oleh validasi terstruktur Pydantic AI dan Groq (Llama 3.3 70B). Beberapa agen AI khusus berorkestrasi dalam pipeline yang tersinkronisasi untuk membuat artikel blog panjang yang didukung penelitian dan diekspor sebagai laporan PDF profesional. Sistem ini distandarisasi pada Llama 3.3 70B melalui Groq untuk penalaran superior dan kepatuhan skema yang ketat, menampilkan UI SaaS premium dengan estetika minimalis kontras tinggi dan tata letak bento-grid.',
+                role: 'AI Engineer & Pengembang Full Stack',
+                highlights: ['Orkestrasi Multi-Agen', 'Llama 3.3 70B via Groq', 'Ekspor PDF Profesional'],
+                features: [
+                    {
+                        title: 'Orkestrasi Multi-Agen',
+                        items: [
+                            '**Agen Perencana**: Menghasilkan kerangka terstruktur 5 bagian menggunakan Llama 3.3 70B dengan kepatuhan skema yang divalidasi Pydantic.',
+                            '**Agen Peneliti**: Melakukan penelitian mendalam untuk setiap bagian yang direncanakan, memperkaya konten dengan informasi kontekstual.',
+                            '**Agen Penulis**: Menyusun artikel Markdown final 1000+ kata dari hasil penelitian, mempertahankan nada dan struktur yang konsisten.',
+                            '**Generator PDF**: Membersihkan konten Markdown dan mengekspor laporan PDF profesional secara otomatis.'
+                        ]
+                    },
+                    {
+                        title: 'UI SaaS Premium',
+                        items: [
+                            '**Tata Letak Bento-Grid**: Antarmuka minimalis kontras tinggi yang dibangun dengan Vue.js 3 dan Tailwind CSS untuk pengalaman visual premium.',
+                            '**Animasi GSAP**: Animasi halus yang dipercepat GPU meningkatkan panel generasi langsung untuk umpan balik real-time.',
+                            '**Showcase Empat Agen**: Kartu UI khusus untuk setiap agen (Perencana, Peneliti, Penulis, Editor) dengan indikator status langsung.',
+                            '**Panel Generasi Langsung**: Panel App.vue root yang mengalirkan progres orkestrasi secara real-time kepada pengguna.'
+                        ]
+                    },
+                    {
+                        title: 'Lapisan AI & Validasi',
+                        items: [
+                            '**Validasi Pydantic v2**: Penegakan skema terstruktur (BlogPlan, FinalBlog) memastikan setiap output LLM divalidasi sebelum perkembangan pipeline.',
+                            '**Inferensi Groq**: Semua agen distandarisasi pada Llama 3.3 70B untuk penalaran, kecepatan, dan kepatuhan JSON yang ketat.',
+                            '**Logika Swarm**: Modul orkestrasi `swarm_logic.py` terpusat mengelola pengurutan pipeline agen dan propagasi error.',
+                            '**Model Robust**: `models.py` mendefinisikan kontrak data Pydantic yang dibagikan di semua agen untuk komunikasi antar-agen yang aman secara tipe.'
+                        ]
+                    },
+                    {
+                        title: 'Arsitektur Serverless',
+                        items: [
+                            '**Deployment Vercel**: Arsitektur siap serverless dengan struktur API datar dan frontend berbasis Vite untuk distribusi edge global.',
+                            '**Entry Flask Serverless**: `api/index.py` bertindak sebagai handler serverless, merutekan semua permintaan `/api/*` dari frontend.',
+                            '**Pembersihan Otomatis**: Artefak PDF dihasilkan secara lokal dan dibersihkan secara otomatis setelah pengiriman, menjaga server tetap stateless.',
+                            '**Frontend Vite 5**: Alat build ultra-cepat untuk frontend Vue.js 3 dengan hot module replacement untuk pengembangan yang cepat.'
+                        ]
+                    }
+                ],
+                challengesAndSolutions: [
+                    {
+                        problem: 'Sinkronisasi Pipeline Agen',
+                        solution: 'Merancang pipeline linier dan sekuensial di swarm_logic.py di mana output Pydantic tervalidasi setiap agen diteruskan sebagai input terstruktur ke agen berikutnya, menghilangkan kondisi race dan memastikan integritas data sepanjang alur generasi.'
+                    },
+                    {
+                        problem: 'Penegakan Skema Output LLM',
+                        solution: 'Memanfaatkan validasi model Pydantic v2 untuk membuat kontrak ketat (BlogPlan, FinalBlog) untuk setiap respons LLM. Setiap pelanggaran skema langsung menghentikan pipeline, mencegah data yang cacat merusak agen hilir.'
+                    },
+                    {
+                        problem: 'Manajemen Artefak PDF Serverless',
+                        solution: 'Mengimplementasikan alur kerja generasi PDF stateless di mana FPDF2 merender konten Markdown ke file sementara, mengalirkannya ke klien sebagai respons unduhan, lalu menghapus artefak lokal secara otomatis untuk mempertahankan lingkungan serverless yang bersih.'
+                    }
+                ]
+            };
+        }
         if (p.slug === 'creative-portfolio-website') {
             return {
                 ...p,
